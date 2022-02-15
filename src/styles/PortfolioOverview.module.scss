@@ -1,0 +1,31 @@
+@import './globals.scss';
+
+.index-intro-user {
+  display: flex;
+  position: relative;
+}
+
+.index-intro-user section {
+  flex: 1;
+  h2 {
+    color: white;
+  }
+  h2, ul {
+    margin-bottom: 8px;
+  }
+  li {
+    font-size: 14px;
+    margin-left: 20px;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+  a {
+    box-shadow: 8px 8px 0 $cyan;
+    &:hover {
+      box-shadow: 8px 8px 0 $green;
+    }
+    &:first-of-type {
+      margin-bottom: $textBlockMargin;
+    }
+  }
+}

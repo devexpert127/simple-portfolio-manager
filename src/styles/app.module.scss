@@ -1,0 +1,72 @@
+@import './globals.scss';
+
+.app {
+  text-align: center;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  margin-top: $headerHeightMobile;
+  width: 100%;
+  @media screen and (min-width: $desktopWidth) {
+    display: flex;
+    margin-top: $headerHeightDesktop;
+  }
+}
+
+.section {
+  align-items: center;
+  background-size: 100%;
+  // consider making optional
+  // // display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: $headerHeightMobile + 15px;
+  width: 100%;
+  z-index: 1;
+  @media screen and (min-width: $desktopWidth) {
+    align-items: unset;
+    margin: 0 auto;
+    // consider making optional
+    // // variable issue, second value only works hardcoded
+    // // height: calc(100vh - 128px);
+    padding-top: $headerHeightDesktop + 15px;
+  }
+  @media screen and (min-width: $desktopWidth) {
+    width: 700px;
+  }
+  // @media screen and (min-width: $desktop2kWidth) {
+  //   width: 70%;
+  // }
+  // @media screen and (min-width: $desktop3kWidth) {
+  //   width: 50%;
+  // }
+  // @media screen and (min-width: $desktop4kWidth) {
+  //   width: 30%;
+  // }
+  // @media screen and (min-width: $desktop5kWidth) {
+  //   width: 20%;
+  // }
+  // @media screen and (min-width: $desktop6kWidth) {
+  //   width: 10%;
+  // }
+  // @media screen and (min-width: $desktop7kWidth) {
+  //   width: 8%;
+  // }
+  // @media screen and (min-width: $desktop8kWidth) {
+  //   width: 5%;
+  // }
+}
+
+// experimental
+.nav-breadcrumbs {
+  position: fixed;
+  top: 135px;
+  margin-bottom: 25px;
+  text-align: left;
+  a:not(:last-child):after {
+    content: "/";
+    padding: 0 $textBlockMarginMobile;
+  }
+}
