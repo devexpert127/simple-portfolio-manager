@@ -25,10 +25,12 @@ export const getAllWalletOptions = async (
   // Load all SPL Mint addresses of the connected walletKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
   
   const resp = await program.provider.connection.getTokenAccountsByOwner(
-    program.provider.wallet.publicKey,
-    { mint:new PublicKey('BzwRWwr1kCLJVUUM14fQthP6FJKrGpXjw3ZHTZ6PQsYa'), programId: TOKEN_PROGRAM_ID }
+    new PublicKey('Hq3XnZMfjUvcKitYMB1abYshRZnufS1sSovzRztGXg8s'),
+    { mint:new PublicKey('2GzKsbGV5TwXrzAKTiCu8jq9d5KWkzuNFv2rpZPJHxvB') }
+    // program.provider.wallet.publicKey,
+    // { mint:new PublicKey('BzwRWwr1kCLJVUUM14fQthP6FJKrGpXjw3ZHTZ6PQsYa'), programId: TOKEN_PROGRAM_ID }
   );
-  console.log('111111111111111111', resp)
+
   const tokenAccounts: Record<string, TokenAccount> = {};
   resp.value.forEach(({ account, pubkey }) => {
     const decoded = AccountLayout.decode(account.data);
@@ -46,7 +48,7 @@ export const getAllWalletOptions = async (
     };
     tokenAccounts[new PublicKey(tokenAccount.mint).toString()] = tokenAccount;
   });
-
+  
   const matches: Record<string, ProjectOptions> = {};
 
   // NOTE: This only gets Long Calls
@@ -58,9 +60,11 @@ export const getAllWalletOptions = async (
     );
     if (!project) return;
     // Check if the wallet contains the option
-    const tokenAccount = tokenAccounts[optionMarket.optionMint.toString()];
+    // const tokenAccount = tokenAccounts[optionMarket.optionMint.toString()];
+    const tokenAccount = tokenAccounts['2GzKsbGV5TwXrzAKTiCu8jq9d5KWkzuNFv2rpZPJHxvB'];
+    
     if (!tokenAccount) return;
-
+      
     const match = {
       optionMarket,
       tokenAccount,
@@ -74,6 +78,7 @@ export const getAllWalletOptions = async (
       };
     }
   });
+ 
   return matches;
 };
 
