@@ -13,19 +13,22 @@ import {
   ProjectOptions,
   TokenAccount,
 } from "../types";
-import { Connection, PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey, Keypair } from "@solana/web3.js";
 
 export const getAllWalletOptions = async (
   program: Program,
   projects: Project[]
 ) => {
   // Load all the PsyOptions option markets
+  
   const optionMarkets = await getAllOptionAccounts(program);
-  // Load all SPL Mint addresses of the connected wallet
+  // Load all SPL Mint addresses of the connected walletKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+  
   const resp = await program.provider.connection.getTokenAccountsByOwner(
     program.provider.wallet.publicKey,
-    { programId: TOKEN_PROGRAM_ID }
+    { mint:new PublicKey('BzwRWwr1kCLJVUUM14fQthP6FJKrGpXjw3ZHTZ6PQsYa'), programId: TOKEN_PROGRAM_ID }
   );
+  console.log('111111111111111111', resp)
   const tokenAccounts: Record<string, TokenAccount> = {};
   resp.value.forEach(({ account, pubkey }) => {
     const decoded = AccountLayout.decode(account.data);

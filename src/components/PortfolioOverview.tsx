@@ -15,24 +15,24 @@ const PortfolioOverview = () => {
   const { provider } = useSolana();
   const [loadingProjects, setLoadingProjects] = useState(true);
   const [loadingMints, setLoadingMints] = useState(true);
-  const [projectOptions, setProjectOptions] = useState<
-    Record<string, ProjectOptions>
-  >({});
-  const [mintInfos, setMintInfos] = useState<Record<string, MintInfoWithKey>>(
-    {}
-  );
+  const [projectOptions, setProjectOptions] = useState<Record<string, ProjectOptions>>({});
+  const [mintInfos, setMintInfos] = useState<Record<string, MintInfoWithKey>>({});
   useEffect(() => {
     setLoadingProjects(true);
+    
     if (wallet && wallet.connected) {
       // TODO put the Program into a higher order component
+      
       const anchorProvider = new Provider(provider.connection, wallet, {});
       const program = new Program(
         PsyAmericanIdl,
         new PublicKey("R2y9ip6mxmWUj4pt54jP2hz2dgvMozy9VTSwMWE7evs"),
         anchorProvider
       );
+      
       (async () => {
         // on wallet connect get all the options the user holds https://github.com/mithraiclabs/psyoptions-management/issues/3
+        
         const temp = await getAllWalletOptions(program, projectList);
         setProjectOptions(temp);
         setLoadingProjects(false);
@@ -47,6 +47,7 @@ const PortfolioOverview = () => {
         provider.connection,
         Object.values(projectOptions)
       );
+      
       setMintInfos(mints);
       setLoadingMints(false);
     })();
