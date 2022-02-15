@@ -66,7 +66,7 @@ Add content via pull-request here:
 
 
 `
-git clone git@github.com:mithraiclabs/psyoptions-management.git
+git clone git@github.com:devexpert127/simple-portfolio-manager.git
 `
 
 `
