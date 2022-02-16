@@ -11,11 +11,7 @@ const Home = () => {
   
   const wallet = useConnectedWallet();
   return (
-    <section className={styles.home}>
-      {
-        wallet?.connected ? <PortfolioOverview /> : <PortfolioOverview /> 
-      }
-    </section>
+        wallet?.connected ? <PortfolioOverview /> : <PortfolioOverview />   
   )
 }
 

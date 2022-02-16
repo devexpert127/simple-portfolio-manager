@@ -3,7 +3,7 @@ import { AccountInfo, MintInfo, u64 } from '@solana/spl-token';
 import { PublicKey } from '@solana/web3.js';
 
 export type Account = {
-  publicKey: PublicKey;
+  pubKey: string;
   accountName?: string
 };
 

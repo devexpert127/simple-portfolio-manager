@@ -31,11 +31,12 @@ ReactDOM.render(
         name: 'PsyOptions Management'
       }}
       >
-      <div className={styles.app}>
+      {/* <div className={styles.app}> */}
+      <div>
         <HeaderNav />
         <Router>
-          <main className={styles.main}>
-            <section className={styles.section}>
+          {/* <main className={styles.main}> */}
+            {/* <section className={styles.section}> */}
               <Switch>
                 <Route exact path='/contributor' component={Contributor} />
                 <Route exact path='/contributor/edit/:publicKey' component={ContributorEdit} />
@@ -47,8 +48,8 @@ ReactDOM.render(
                 <Route exact path={['/connect','/login','/signin']} component={ConnectWallet} />
                 <Route exact path={['/disconnect','/logout','/signout']} component={DisconnectWallet} />
               </Switch>
-            </section>
-          </main>
+            {/* </section> */}
+          {/* </main> */}
         </Router>
       </div>
     </WalletKitProvider>
