@@ -5,14 +5,16 @@ import { OptionMarket } from "@mithraic-labs/psy-american";
 import { Tokens } from "@mithraic-labs/psy-token-registry";
 import { bnToFloat, formatStrike } from "../lib/utils";
 
-import { MintInfoWithKey, OptionAccounts, TableData } from "../types";
+import { MintInfoWithKey, OptionAccounts, Project, TableData } from "../types";
 import OptionOverview from "./OptionOverview";
 import styles from "../styles/PortfolioOverview.module.scss";
 
 const TablePanle: React.FC<{
+  project : Project;
   optionAccounts: OptionAccounts[];
   mintInfos: Record<string, MintInfoWithKey>;
 }> = ({
+  project,
   optionAccounts,
   mintInfos
 }) => {
@@ -53,8 +55,9 @@ const TablePanle: React.FC<{
       const rowData ={
         expDate : dateTime,
         underAmount : underlyingAmount,
-        unerSymbol : underlyingToken.symbol.toUpperCase(),
-        underLogo : underlyingToken.logoURI,
+        // unerSymbol : underlyingToken.symbol.toUpperCase(),
+        unerSymbol : project.symbol,
+        underLogo : project.logo,
         quoteAmount : strikeDisplay,
         quoteSymbol : quoteToken.symbol.toUpperCase(),
         quoteLogo : quoteToken.logoURI,

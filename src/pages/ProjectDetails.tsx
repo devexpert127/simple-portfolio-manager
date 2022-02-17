@@ -67,6 +67,7 @@ const ProjectDetails: React.FC<DETProps> = ({match}) => {
         </div>
         <div className={styles['tablePanel']}>
           <TablePanel
+            project = {projectOption[projectKey]?.project}
             optionAccounts={projectOption[projectKey].options}
             mintInfos = {mintInfo}
           />
