@@ -189,4 +189,29 @@
   }
 }
 
-
+table {
+  width:100%;
+  border : 1px solid #191a1a;
+  border-radius: 7px;
+  thead{
+    background-color: #2d2d2d;
+    tr{
+      border-bottom: 1px solid #191a1a;
+      height: 45px;
+      th{
+        text-align: center;
+        padding:4px;
+      }
+    }
+  }
+  tbody {
+    tr{
+      border-bottom: 1px solid #191a1a;
+      height: 40px;
+      td{
+        text-align: center;
+        padding:4px;
+      }
+    }
+  }
+}

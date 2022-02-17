@@ -16,7 +16,21 @@ const OptionOverview: React.FC<{
           optionAccounts.optionMarket, 
           mintInfos[optionAccounts.optionMarket.underlyingAssetMint.toString()],
           mintInfos[optionAccounts.optionMarket.quoteAssetMint.toString()]
-        )}
+        )
+        }
+        
+      </CardContent>
+      <CardContent>
+        {
+          optionAccounts.tokenAccount.amount.toString()
+        }
+        
+      </CardContent>
+      <CardContent>
+        {
+          optionAccounts.optionMarket.underlyingAssetMint.toString()
+        }
+        
       </CardContent>
     </Card>
   );

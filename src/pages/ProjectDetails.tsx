@@ -11,6 +11,9 @@ import { CircularProgress } from "@material-ui/core";
 import OverviewPanel from "../components/OverviewPanel";
 import ChartPanel from "../components/ChartPanel";
 import TablePanel from "../components/TablePanel";
+import Details from "../components/Details";
+
+
 type DETProps = {
   match: any;
 };
@@ -55,6 +58,11 @@ const ProjectDetails: React.FC<DETProps> = ({match}) => {
               optionAccounts={projectOption[projectKey].options}
               mintInfos = {mintInfo}
             />
+            {/* <Details
+              project = {projectOption[projectKey]?.project}
+              optionAccounts={projectOption[projectKey].options}
+              mintInfos = {mintInfo}
+            /> */}
           </div>
         </div>
         <div className={styles['tablePanel']}>

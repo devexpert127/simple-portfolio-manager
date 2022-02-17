@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-
-
+import { Card, CardContent, CardHeader } from "@material-ui/core";
 import { Account, MintInfoWithKey, OptionAccounts, Project } from "../types";
 import OptionOverview from "./OptionOverview";
 import styles from "../styles/PortfolioOverview.module.scss";
@@ -15,12 +14,23 @@ const Details: React.FC<{
   optionAccounts,
   mintInfos
 }) => {
-  
-  console.log('11111111111111',project)
   return (
-    <div >
-      
-    </div>
+    
+      <Card variant="outlined">
+        <CardHeader title={project.name} />
+        <CardContent>
+          Options Held:
+          {optionAccounts.map((x, index) => (
+            <OptionOverview
+              key={index.toString()}
+              project={project}
+              optionAccounts={x}
+              mintInfos={mintInfos}
+            />
+          ))}
+        </CardContent>
+      </Card>
+   
   );
 };
 

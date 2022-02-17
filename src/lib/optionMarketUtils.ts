@@ -41,5 +41,5 @@ export const displayHeader = (
 
   return `${underlyingAmount} ${project.symbol} ${strikeDisplay} ${
     quoteToken.symbol
-  } ${expirationDate.getFullYear()}-${expirationDate.getMonth()}-${expirationDate.getDay()}`;
+  } ${expirationDate.getFullYear()}-${expirationDate.getMonth() + 1}-${expirationDate.getDay()}`;
 };

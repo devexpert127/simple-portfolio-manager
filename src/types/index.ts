@@ -7,6 +7,18 @@ export type Account = {
   accountName?: string
 };
 
+export type TableData = {
+  expDate: string;
+  underAmount: number;
+  unerSymbol: string;
+  underLogo: string;
+  quoteAmount: string;
+  quoteSymbol: string;
+  quoteLogo: string;
+  mintFeeAcc: string;
+  exerciseFeeAcc: string;
+};
+
 export type Asset = {
   tokenSymbol: string;
   mintAddress: string;

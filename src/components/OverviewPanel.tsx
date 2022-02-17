@@ -17,7 +17,6 @@ const overviewPanel: React.FC<{
   project,
   account
 }) => {
-  console.log('11111111111111111111', project);
   return (
     <div className={styles['overviewBody']}>
       <h2>Project Overview</h2>

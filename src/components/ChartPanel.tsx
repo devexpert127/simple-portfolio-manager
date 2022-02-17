@@ -13,7 +13,6 @@ const ChartPanel: React.FC<{
   optionAccounts,
   mintInfos
 }) => {
-  
   return (
     <div >
       <h2>Trading History</h2>
