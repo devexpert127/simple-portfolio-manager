@@ -77,7 +77,6 @@ const PortfolioOverview = () => {
           <h2>My Projects</h2>
           <p>Total : &nbsp;&nbsp;{Object.keys(projectOption).length} &nbsp; projects</p>
         </div>
-        {console.log('LoadingProject value is ', loadingProjects, 'MintInfo length is ', Object.keys(mintInfo).length)}
           <div className={styles["project-card-area"]}>
             {loadingProjects || Object.keys(mintInfo).length <= 0 ? (
               <CircularProgress />

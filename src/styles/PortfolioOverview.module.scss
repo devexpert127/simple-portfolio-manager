@@ -122,4 +122,71 @@
   }
 }
 
+.turnBackBttn{
+  padding : 10px 20px;
+  float: right;
+  position:relative;
+  top : -50px;
+  .bttn{
+    background-color: #4a7ff8;
+    color: white;
+  }
+}
+.project-details-container{
+  width: 95%;
+  color: white;
+  padding: 3%;
+  top: 100px;
+  position: relative;
+  margin: auto;
+  h2{
+    font-family: $fontFamilyHeading;
+  }
+  .project-card-area {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    .overviewPanel {
+      padding:10px;
+      width:35%;
+     
+      .overviewBody{
+        position:relative;
+        .logoDiv{
+          width:80px;
+          height: 80px;
+          position:absolute;
+          top:-20px;
+          right : 30px;
+          border-radius: 50%;
+        }
+        .contentStatements{
+          margin-bottom : 15px;
+          p{
+            color:white;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 7px;
+          }
+          span{
+            color:grey;
+            font-size: 15px;
+            font-weight: 500;
+          }
+          a{
+            color:#4a7ff8;
+            font-size: 15px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+    .chartPanel {
+      padding:15px 30px;
+      border-left: 1px solid #191a1a;
+    }
+  }
+}
+
 

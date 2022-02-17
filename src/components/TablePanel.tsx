@@ -6,17 +6,14 @@ import { Account, MintInfoWithKey, OptionAccounts, Project } from "../types";
 import OptionOverview from "./OptionOverview";
 import styles from "../styles/PortfolioOverview.module.scss";
 
-const Details: React.FC<{
-  project: Project;
+const TablePanle: React.FC<{
   optionAccounts: OptionAccounts[];
   mintInfos: Record<string, MintInfoWithKey>;
 }> = ({
-  project,
   optionAccounts,
   mintInfos
 }) => {
-  
-  console.log('11111111111111',project)
+  console.log('222222222222', optionAccounts)
   return (
     <div >
       
@@ -24,4 +21,4 @@ const Details: React.FC<{
   );
 };
 
-export default Details;
+export default TablePanle;

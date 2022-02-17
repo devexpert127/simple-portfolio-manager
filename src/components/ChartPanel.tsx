@@ -6,22 +6,19 @@ import { Account, MintInfoWithKey, OptionAccounts, Project } from "../types";
 import OptionOverview from "./OptionOverview";
 import styles from "../styles/PortfolioOverview.module.scss";
 
-const Details: React.FC<{
-  project: Project;
+const ChartPanel: React.FC<{
   optionAccounts: OptionAccounts[];
   mintInfos: Record<string, MintInfoWithKey>;
 }> = ({
-  project,
   optionAccounts,
   mintInfos
 }) => {
   
-  console.log('11111111111111',project)
   return (
     <div >
-      
+      <h2>Trading History</h2>
     </div>
   );
 };
 
-export default Details;
+export default ChartPanel;
