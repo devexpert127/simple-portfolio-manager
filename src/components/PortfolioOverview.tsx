@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updatedAccount, updatedProjectOption, updatedMintInfo } from "../slices/projectSlice"
+import { TStore } from "../store";
 import { useConnectedWallet, useSolana } from "@saberhq/use-solana";
 import { PsyAmericanIdl } from "@mithraic-labs/psy-american";
 import styles from "../styles/PortfolioOverview.module.scss";
@@ -7,53 +10,58 @@ import { PublicKey } from "@solana/web3.js";
 import { getAllWalletOptions, loadMintInfo } from "../lib/utils";
 import projectList from "../content/projectList.json";
 import { CircularProgress } from "@material-ui/core";
-import { MintInfoWithKey, ProjectOptions, Account } from "../types";
 import ProjectOverview from "./ProjectOverview";
 
 const PortfolioOverview = () => {
+  const dispatch = useDispatch();
+  const { projectOption, account, mintInfo } = useSelector((state: TStore) => state.projectReducer)
   const wallet = useConnectedWallet();
   const { provider } = useSolana();
-  const [loadingProjects, setLoadingProjects] = useState(true);
+  const [loadingProjects, setLoadingProjects] = useState(false);
   const [loadingMints, setLoadingMints] = useState(true);
-  const [projectOptions, setProjectOptions] = useState<Record<string, ProjectOptions>>({});
-  const [account, setAccount] = useState<Account>({pubKey: ''});
-  const [mintInfos, setMintInfos] = useState<Record<string, MintInfoWithKey>>({});
+  
   useEffect(() => {
-    setLoadingProjects(true);
-    
+      
     if (wallet && wallet.connected) {
       // TODO put the Program into a higher order component
-      const accountName = "Lyappunov"
-      setAccount({pubKey:wallet.publicKey.toString(),accountName:accountName});
-      const anchorProvider = new Provider(provider.connection, wallet, {});
-      const program = new Program(
-        PsyAmericanIdl,
-        new PublicKey("R2y9ip6mxmWUj4pt54jP2hz2dgvMozy9VTSwMWE7evs"),
-        anchorProvider
-      );
-      
-      (async () => {
-        // on wallet connect get all the options the user holds https://github.com/mithraiclabs/psyoptions-management/issues/3
+      if(Object.keys(projectOption).length <= 0){
+        setLoadingProjects(true);
+        const accountName = "Lyappunov"
+        dispatch(updatedAccount({account : {pubKey:wallet.publicKey.toString(),accountName:accountName}}))
+        const anchorProvider = new Provider(provider.connection, wallet, {});
+        const program = new Program(
+          PsyAmericanIdl,
+          new PublicKey("R2y9ip6mxmWUj4pt54jP2hz2dgvMozy9VTSwMWE7evs"),
+          anchorProvider
+        );
         
-        const temp = await getAllWalletOptions(program, projectList);
-        setProjectOptions(temp);
-        setLoadingProjects(false);
-      })();
+        (async () => {
+          // on wallet connect get all the options the user holds https://github.com/mithraiclabs/psyoptions-management/issues/3
+          
+          const temp = await getAllWalletOptions(program, projectList);
+          dispatch(updatedProjectOption({ projectOption : temp }))
+          setLoadingProjects(false);
+        })();
+      }
+      
     }
   }, [provider.connection, wallet]);
 
   // Load the MintInfo for all non-option SPL Tokens. This is necessary to display strike prices
   useEffect(() => {
-    (async () => {
-      const mints = await loadMintInfo(
-        provider.connection,
-        Object.values(projectOptions)
-      );
-      
-      setMintInfos(mints);
-      setLoadingMints(false);
-    })();
-  }, [provider.connection, projectOptions]);
+    if(Object.keys(mintInfo).length <=0){
+      (async () => {
+        const mints = await loadMintInfo(
+          provider.connection,
+          Object.values(projectOption)
+        );
+        
+        dispatch(updatedMintInfo({ mintInfo : mints }))
+        setLoadingMints(false);
+      })();
+    }
+    
+  }, [provider.connection, projectOption]);
 
   return (
     // <div className={styles["index-intro-user"]}>
@@ -67,19 +75,19 @@ const PortfolioOverview = () => {
       <div className={styles['project-area']}>
         <div className={styles["project-area-title"]}>
           <h2>My Projects</h2>
-          <p>Total : &nbsp;&nbsp;{Object.keys(projectOptions).length} &nbsp; projects</p>
+          <p>Total : &nbsp;&nbsp;{Object.keys(projectOption).length} &nbsp; projects</p>
         </div>
-
+        {console.log('LoadingProject value is ', loadingProjects, 'MintInfo length is ', Object.keys(mintInfo).length)}
           <div className={styles["project-card-area"]}>
-            {loadingProjects || Object.keys(mintInfos).length <= 0 ? (
+            {loadingProjects || Object.keys(mintInfo).length <= 0 ? (
               <CircularProgress />
             ) : (
-              Object.keys(projectOptions).map((key) => (
+              Object.keys(projectOption).map((key) => (
                 <ProjectOverview
                   key={key}
-                  project={projectOptions[key].project}
-                  optionAccounts={projectOptions[key].options}
-                  mintInfos={mintInfos}
+                  project={projectOption[key].project}
+                  optionAccounts={projectOption[key].options}
+                  mintInfos={mintInfo}
                 />
               ))
             )}

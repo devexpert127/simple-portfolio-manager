@@ -10,9 +10,6 @@ const OptionOverview: React.FC<{
 }> = ({ optionAccounts, project, mintInfos }) => {
   return (
     <Card>
-      {
-        console.log('111111111', project, '\n 22222222', optionAccounts.optionMarket, '\n 33333333333', mintInfos[optionAccounts.optionMarket.underlyingAssetMint.toString()], '\n 44444444444444', mintInfos[optionAccounts.optionMarket.quoteAssetMint.toString()])
-      }
       <CardContent>
         {displayHeader(
           project,

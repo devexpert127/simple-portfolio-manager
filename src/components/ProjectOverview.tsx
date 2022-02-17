@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from "@material-ui/core";
 import { Account, MintInfoWithKey, OptionAccounts, Project } from "../types";
 import OptionOverview from "./OptionOverview";
@@ -14,7 +15,7 @@ const ProjectOverview: React.FC<{
   mintInfos
 }) => {
   return (
-    
+    <Link to={`/projectdetails/view/${project.key}`}>
       <div className={styles["project-card-container"]}>
         <div className={styles["project-card-title"]}>
           <div className={styles['project-logo']}>
@@ -28,22 +29,7 @@ const ProjectOverview: React.FC<{
           <p>Mint Address : &nbsp; "{project.mintAddress}"</p>
         </div>
       </div>
-      // {/* <Card variant="outlined">
-      //   <CardHeader title={project.name} />
-      //   {console.log('5555555', optionAccounts)}
-      //   <CardContent>
-      //     Options Held:
-      //     {optionAccounts.map((x, index) => (
-      //       <OptionOverview
-      //         key={index.toString()}
-      //         project={project}
-      //         optionAccounts={x}
-      //         mintInfos={mintInfos}
-      //       />
-      //     ))}
-      //   </CardContent>
-      // </Card> */}
-   
+    </Link>
   );
 };
 
