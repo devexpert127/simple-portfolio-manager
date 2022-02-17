@@ -55,7 +55,6 @@ const TablePanle: React.FC<{
       const rowData ={
         expDate : dateTime,
         underAmount : underlyingAmount,
-        // unerSymbol : underlyingToken.symbol.toUpperCase(),
         unerSymbol : project.symbol,
         underLogo : project.logo,
         quoteAmount : strikeDisplay,
