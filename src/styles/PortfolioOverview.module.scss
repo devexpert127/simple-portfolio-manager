@@ -185,6 +185,22 @@
     .chartPanel {
       padding:15px 30px;
       border-left: 1px solid #191a1a;
+      width:75%;
+      .chart-body{
+        .chart-title{
+          min-width: 100%;
+          height: 70px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          h2{
+            span{
+              color:#4bffb5;
+              font-size:35px;
+            }
+          }
+        }
+      } 
     }
   }
 }

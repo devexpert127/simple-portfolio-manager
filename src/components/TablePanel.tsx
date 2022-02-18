@@ -38,6 +38,7 @@ const TablePanle: React.FC<{
   
       const quoteToken = Tokens.devnet[quoteMint.pubkey.toString()];
       const underlyingToken = Tokens.devnet[underlyingMint.pubkey.toString()];
+      const underTokenMainNet = Tokens.mainnet[underlyingMint.pubkey.toString()];
   
       let underlyingAmount = bnToFloat(
         x.optionMarket.underlyingAmountPerContract,
@@ -90,8 +91,8 @@ const TablePanle: React.FC<{
         </thead>
         <tbody>
           {tableData.map((tdata, idx)=>(
-            <tr>
-              <td>{idx}</td>
+            <tr key={idx}>
+              <td>{idx + 1}</td>
               <td>{tdata.expDate}</td>
               <td>{tdata.underAmount}</td>
               <td>{tdata.unerSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.underLogo} style={{width:'20px', height:"20px"}}/></td>

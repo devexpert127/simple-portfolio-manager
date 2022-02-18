@@ -25,7 +25,7 @@ export const displayHeader = (
   );
   const quoteToken = Tokens.devnet[quoteMint.pubkey.toString()];
   const underlyingToken = Tokens.devnet[underlyingMint.pubkey.toString()];
-
+  
   const strikeDisplay = formatStrike(
     optionMarket.underlyingAmountPerContract,
     optionMarket.quoteAmountPerContract,

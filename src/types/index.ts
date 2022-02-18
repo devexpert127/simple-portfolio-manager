@@ -19,6 +19,14 @@ export type TableData = {
   exerciseFeeAcc: string;
 };
 
+export type CandleChartData = {
+  time: string,
+  open: number,
+  high: number,
+  low: number,
+  close: number
+};
+
 export type Asset = {
   tokenSymbol: string;
   mintAddress: string;

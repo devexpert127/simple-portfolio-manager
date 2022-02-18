@@ -55,6 +55,7 @@ const ProjectDetails: React.FC<DETProps> = ({match}) => {
           </div>
           <div className={styles['chartPanel']}>
             <ChartPanel
+              project={projectOption[projectKey]?.project}
               optionAccounts={projectOption[projectKey].options}
               mintInfos = {mintInfo}
             />

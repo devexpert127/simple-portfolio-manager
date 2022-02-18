@@ -9,6 +9,7 @@ import { projectSlice } from "../slices/projectSlice";
 import Twitter from '@material-ui/icons/Twitter'
 import ExploreRounded from '@material-ui/icons/ExploreRounded';
 import DiscordIcon from '@material-ui/icons/DirectionsCarTwoTone';
+import Discord from '../images/icons8-discord.svg';
 
 const overviewPanel: React.FC<{
   project: Project;
@@ -40,7 +41,7 @@ const overviewPanel: React.FC<{
         <a href={project.twitter}>{project.twitter}</a>  
       </div>
       <div className={styles['contentStatements']}>
-        <p><DiscordIcon/> &nbsp;&nbsp;&nbsp; Discord</p>
+        <p><img src={Discord} style={{width:'25px', height:'25px'}}/> &nbsp;&nbsp;&nbsp; Discord</p>
         <a href={project.discord}>{project.discord}</a>  
       </div>
     </div>
