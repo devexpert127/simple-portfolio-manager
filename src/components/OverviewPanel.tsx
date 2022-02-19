@@ -22,7 +22,7 @@ const overviewPanel: React.FC<{
     <div className={styles['overviewBody']}>
       <h2>Project Overview</h2>
       <div className={styles['logoDiv']}>
-        <img src={project.logo} style={{width:'80px', height:'80px'}}/>
+        <img src={project.logo} style={{width:'4.5em', height:'4.5'}}/>
       </div>
       <div className={styles['content-div']}>
         <div className={styles['contentStatements']} style={{marginTop: '60px'}}>

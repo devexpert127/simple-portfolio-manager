@@ -66,6 +66,7 @@
   }
   p:not(:first-of-type){
     font-family: $fontFamilyHeading;
+    margin-left: 15px;
     @media screen and (max-width: 450px){
       overflow: hidden;
       text-overflow: ellipsis;
@@ -78,6 +79,11 @@
       font-weight: 400;
       color : grey;
     }
+  }
+  .price{
+    color:#25f943;
+    font-size: 1.5em;
+    margin-top : 7px;
   }
   
 }
