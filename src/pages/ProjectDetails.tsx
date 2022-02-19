@@ -33,9 +33,9 @@ const ProjectDetails: React.FC<DETProps> = ({match}) => {
     <div className={styles["project-details-container"]}>
         <div className={styles["portfolio-header"]}>
           <h2>Project Details</h2>
-          <p style={{fontSize:'36px'}}><span>Project Name : &nbsp;&nbsp;</span> {projectOption[projectKey]?.project.name} </p>
+          <p style={{fontSize:'2em'}}><span>Project Name : &nbsp;&nbsp;</span> {projectOption[projectKey]?.project.name} </p>
           <br/>
-          <p><span>Project Symbol : &nbsp;&nbsp;</span> {projectOption[projectKey]?.project.symbol} </p>
+          <p style={{fontSize:'1.3em'}}><span>Project Symbol : &nbsp;&nbsp;</span> {projectOption[projectKey]?.project.symbol} </p>
           <div className={styles["turnBackBttn"]}>
             <Button 
               variant = "contained"
