@@ -89,15 +89,15 @@ const TablePanle: React.FC<{
         <tbody>
           {tableData.map((tdata, idx)=>(
             <tr key={idx}>
-              {idx==0?(<td data-labe="ID">{idx + 1}</td>):
-              <td data-labe="ID" scope="row">{idx + 1}</td>}
-              <td data-labe="ExpDate">{tdata.expDate}</td>
-              <td data-labe="UnderAmount">{tdata.underAmount}</td>
-              <td data-labe="UnderSymbol">{tdata.unerSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.underLogo} style={{width:'20px', height:"20px"}}/></td>
-              <td data-labe="QuoteAmount">{tdata.quoteAmount}</td>
-              <td data-labe="QuoteSymbol">{tdata.quoteSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.quoteLogo} style={{width:'20px', height:"20px"}}/></td>
-              <td data-labe="MintFee"><div className={styles['addressTd']}>{tdata.mintFeeAcc}</div></td>
-              <td data-labe="ExerFee"><div className={styles['addressTd']}>{tdata.exerciseFeeAcc}</div></td>
+              {idx==0?(<td data-label="ID">{idx + 1}</td>):
+              <td data-label="ID" scope="row">{idx + 1}</td>}
+              <td data-label="ExpDate">{tdata.expDate}</td>
+              <td data-label="UnderAmount">{tdata.underAmount}</td>
+              <td data-label="UnderSymbol">{tdata.unerSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.underLogo} style={{width:'20px', height:"20px"}}/></td>
+              <td data-label="QuoteAmount">{tdata.quoteAmount}</td>
+              <td data-label="QuoteSymbol">{tdata.quoteSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.quoteLogo} style={{width:'20px', height:"20px"}}/></td>
+              <td data-label="MintFee"><div className={styles['addressTd']}>{tdata.mintFeeAcc}</div></td>
+              <td data-label="ExerFee"><div className={styles['addressTd']}>{tdata.exerciseFeeAcc}</div></td>
             </tr>
           ))}
         </tbody>

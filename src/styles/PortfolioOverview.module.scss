@@ -431,7 +431,7 @@ table th {
   text-transform: uppercase;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1024px) {
   table {
     border: 0;
   }
@@ -480,7 +480,7 @@ table th {
     border-bottom: 0;
   }
 }
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1024px) {
   .addressTd{
     display: block;
     overflow: hidden;
