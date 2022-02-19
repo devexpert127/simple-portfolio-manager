@@ -107,6 +107,8 @@
   .project-card-area {
     display: flex;
     flex-direction: row;
+    max-width: 100%;
+    overflow-x: auto;
     @media screen and (max-width: 1280px) {
       flex-direction: column;
     }
