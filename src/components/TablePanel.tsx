@@ -71,9 +71,9 @@ const TablePanle: React.FC<{
 
 
   return (
-    // <div className={styles['tableDiv']}>
+    <div className={styles['tableDiv']}>
       <table>
-        <caption>Options Table</caption>
+        {/* <caption>Options Table</caption> */}
         <thead>
           <tr>
             <th scope="col">No</th>
@@ -86,6 +86,7 @@ const TablePanle: React.FC<{
             <th scope="col">Exercise Fee Account</th>
           </tr>
         </thead>
+      
         <tbody>
           {tableData.map((tdata, idx)=>(
             <tr key={idx}>
@@ -100,9 +101,11 @@ const TablePanle: React.FC<{
               <td data-label="ExerFee"><div className={styles['addressTd']}>{tdata.exerciseFeeAcc}</div></td>
             </tr>
           ))}
+           
         </tbody>
+       
       </table>
-    // </div>
+    </div>
   );
 };
 
