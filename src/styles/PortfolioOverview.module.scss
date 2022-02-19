@@ -50,11 +50,14 @@
     color: white;
     font-family: $fontFamilyHeading;
   }
-  p {
+  p:first-of-type {
     font-size: 18px;
     font-weight: 800;
     margin-left: 15px;
     font-family: $fontFamilyHeading;
+    @media screen and (max-width: 450px){
+      font-size: 1.2em;
+    }
     span {
       font-size: 14px;
       font-weight: 400;
@@ -62,12 +65,18 @@
     }
   }
   p:not(:first-of-type){
-   
-    @media screen and (max-width: 850px){
+    font-family: $fontFamilyHeading;
+    @media screen and (max-width: 450px){
       overflow: hidden;
       text-overflow: ellipsis;
       width: 300px;
       white-space: nowrap;
+      font-size: 1em;
+    }
+    span {
+      font-size: 14px;
+      font-weight: 400;
+      color : grey;
     }
   }
   
@@ -211,6 +220,12 @@
           top:-20px;
           right : 30px;
           border-radius: 50%;
+          @media screen and (max-width: 430px) {
+            right: -0em
+          }
+          @media screen and (max-width: 370px) {
+            right: -1.9em
+          }
         }
         .content-div{
           @media screen and (max-width: 1280px) {
@@ -222,9 +237,19 @@
             .contentStatements2{
               flex: 50%;
               margin-top:60px;
-              @media screen and (max-width: 919px){
-                margin-top:0px;
-              }
+              word-break: break-all;
+            }
+          }
+          @media screen and (max-width: 450px) {
+            display: flex;
+            flex-wrap: wrap;
+            .contentStatements{
+              flex: 100%;
+            }
+            .contentStatements2{
+              flex: 100%;
+              margin-top:0px;
+              word-break: break-all;
             }
           }
           .contentStatements{
@@ -402,6 +427,7 @@ table {
   padding: 0;
   width: 100%;
   position : relative;
+  table-layout: fixed;
 }
 
 table caption {
@@ -485,14 +511,8 @@ table th {
     border-bottom: 0;
   }
 }
-@media screen and (min-width: 1024px) {
-  .addressTd{
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 200px;
-    white-space: nowrap;
-  }
+.addressTd{
+  word-break: break-all;
 }
 
 .tableDiv{
