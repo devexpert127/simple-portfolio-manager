@@ -213,6 +213,9 @@
       }
       .overviewBody{
         position:relative;
+        @media screen and (max-width: 430px) {
+          h2{font-size: 1.3em;}
+        }
         .logoDiv{
           width:80px;
           height: 80px;
@@ -224,7 +227,7 @@
             right: -0em
           }
           @media screen and (max-width: 370px) {
-            right: -1.9em
+            right: -0.9em
           }
         }
         .content-div{
