@@ -71,40 +71,38 @@ const TablePanle: React.FC<{
 
 
   return (
-    <div>
+    // <div className={styles['tableDiv']}>
       <table>
+        <caption>Options Table</caption>
         <thead>
           <tr>
-            <th rowSpan={2}>No</th>
-            <th rowSpan={2}>Exp Date</th>
-            <th colSpan={2}>Underlying Asset</th>
-            <th colSpan={2}>Quote Asset</th>
-            <th rowSpan={2}>Mint Fee Account</th>
-            <th rowSpan={2}>Exercise Fee Account</th>
-          </tr>
-          <tr>
-            <th>Amount</th>
-            <th>Symbol</th>
-            <th>Amount</th>
-            <th>Symbol</th>
+            <th scope="col">No</th>
+            <th scope="col">Exp Date</th>
+            <th scope="col">Underling Amount</th>
+            <th scope="col">Underling Symbol</th>
+            <th scope="col">Quote Amount</th>
+            <th scope="col">Quote Symbol</th>
+            <th scope="col">Mint Fee Account</th>
+            <th scope="col">Exercise Fee Account</th>
           </tr>
         </thead>
         <tbody>
           {tableData.map((tdata, idx)=>(
             <tr key={idx}>
-              <td>{idx + 1}</td>
-              <td>{tdata.expDate}</td>
-              <td>{tdata.underAmount}</td>
-              <td>{tdata.unerSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.underLogo} style={{width:'20px', height:"20px"}}/></td>
-              <td>{tdata.quoteAmount}</td>
-              <td>{tdata.quoteSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.quoteLogo} style={{width:'20px', height:"20px"}}/></td>
-              <td>{tdata.mintFeeAcc}</td>
-              <td>{tdata.exerciseFeeAcc}</td>
+              {idx==0?(<td data-labe="ID">{idx + 1}</td>):
+              <td data-labe="ID" scope="row">{idx + 1}</td>}
+              <td data-labe="ExpDate">{tdata.expDate}</td>
+              <td data-labe="UnderAmount">{tdata.underAmount}</td>
+              <td data-labe="UnderSymbol">{tdata.unerSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.underLogo} style={{width:'20px', height:"20px"}}/></td>
+              <td data-labe="QuoteAmount">{tdata.quoteAmount}</td>
+              <td data-labe="QuoteSymbol">{tdata.quoteSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.quoteLogo} style={{width:'20px', height:"20px"}}/></td>
+              <td data-labe="MintFee"><div className={styles['addressTd']}>{tdata.mintFeeAcc}</div></td>
+              <td data-labe="ExerFee"><div className={styles['addressTd']}>{tdata.exerciseFeeAcc}</div></td>
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
+    // </div>
   );
 };
 

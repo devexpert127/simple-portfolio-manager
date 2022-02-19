@@ -24,25 +24,27 @@ const overviewPanel: React.FC<{
       <div className={styles['logoDiv']}>
         <img src={project.logo} style={{width:'80px', height:'80px'}}/>
       </div>
-      <div className={styles['contentStatements']} style={{marginTop:"60px"}}>
-        <p>Description</p>
-        <span>{project.description}</span>  
-      </div>
-      <div className={styles['contentStatements']}>
-        <p>Mint Address</p>
-        <span>{project.mintAddress}</span>  
-      </div>
-      <div className={styles['contentStatements']}>
-        <p><ExploreRounded/>&nbsp;&nbsp;&nbsp; Website</p>
-        <a href={project.website}>{project.website}</a>  
-      </div>
-      <div className={styles['contentStatements']}>
-        <p><Twitter/> &nbsp;&nbsp;&nbsp;Twitter</p>
-        <a href={project.twitter}>{project.twitter}</a>  
-      </div>
-      <div className={styles['contentStatements']}>
-        <p><img src={Discord} style={{width:'25px', height:'25px'}}/> &nbsp;&nbsp;&nbsp; Discord</p>
-        <a href={project.discord}>{project.discord}</a>  
+      <div className={styles['content-div']}>
+        <div className={styles['contentStatements']} style={{marginTop: '60px'}}>
+          <p>Description</p>
+          <span>{project.description}</span>  
+        </div>
+        <div className={styles['contentStatements2']}>
+          <p>Mint Address</p>
+          <span>{project.mintAddress}</span>  
+        </div>
+        <div className={styles['contentStatements']}>
+          <p><ExploreRounded/>&nbsp;&nbsp;&nbsp; Website</p>
+          <a href={project.website}>{project.website}</a>  
+        </div>
+        <div className={styles['contentStatements']}>
+          <p><Twitter/> &nbsp;&nbsp;&nbsp;Twitter</p>
+          <a href={project.twitter}>{project.twitter}</a>  
+        </div>
+        <div className={styles['contentStatements']}>
+          <p><img src={Discord} style={{width:'25px', height:'25px'}}/> &nbsp;&nbsp;&nbsp; Discord</p>
+          <a href={project.discord}>{project.discord}</a>  
+        </div>
       </div>
     </div>
   );

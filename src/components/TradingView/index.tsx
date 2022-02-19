@@ -40,7 +40,6 @@ const TVChartContainer : React.FC<{
         setCandleData(arr);
       })
       .catch((err) => console.info(err));
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>', dataCandle)
     if (dataCandle && dataCandle.length > 0 && ref.current) {
       const chart = createChart(ref.current, {
         width: ref.current.clientWidth,
@@ -51,10 +50,10 @@ const TVChartContainer : React.FC<{
         },
         crosshair: {
           vertLine: {
-            visible: false,
+            visible: true,
           },
           horzLine: {
-            visible: false,
+            visible: true,
           },
         },
         grid: {

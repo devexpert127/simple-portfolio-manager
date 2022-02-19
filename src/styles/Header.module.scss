@@ -9,26 +9,32 @@
   top: 0;
   width: 100%;
   z-index: 888888;
+  padding-bottom: 10px;
   @media screen and (min-width: $desktopWidth) {
     padding-top: unset;
   }
 
   div:first-of-type {
-    margin-left: $textBlockMarginMobile;
-    flex: 1;
-    width: 220px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 40px;
   }
 
   ul {
-    @media screen and (min-width: $tabletWidth) {
-      // margin-left: -20px;
+    display: flex;
+    flex-direction: row;
+    padding-left: 20px;
+    @media screen and (max-width: $tabletWidth) {
+      flex-direction: column;
     }
     li {
       font-size: 12px;
       list-style: none;
       margin-bottom: 2px;
+      margin-right: 5px;
       text-align: left;
-      &:first-of-type {
+      &:last-of-type {
         font-weight: 700;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -43,7 +49,7 @@
           width: unset;
         }
       }
-      &:not(:first-of-type) {
+      &:not(:last-of-type) {
         color: lighten($grey, 20%);
         font-weight: 700;
         strong {
@@ -82,10 +88,11 @@
 }
 
 .header {
-  align-items: center;
-  justify-content: center;
-  @media screen and (min-width: $desktopWidth) {
-    display: flex;
-    height: $headerHeightDesktop;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  @media screen and (max-width: $tabletWidth) {
+    height:180px;
   }
 }

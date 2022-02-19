@@ -33,9 +33,12 @@
   width: 80%;
   color: white;
   padding: 5%;
-  top: 60px;
+  top: 120px;
   position: relative;
   margin: auto;
+  @media screen and (max-width: $tabletWidth) {
+    top:170px;
+  }
 }
 .portfolio-header{
   border-bottom: 1px solid grey;
@@ -56,6 +59,15 @@
       font-size: 14px;
       font-weight: 400;
       color : grey;
+    }
+  }
+  p:not(:first-of-type){
+   
+    @media screen and (max-width: 850px){
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 300px;
+      white-space: nowrap;
     }
   }
   
@@ -80,6 +92,9 @@
   .project-card-area {
     display: flex;
     flex-direction: row;
+    @media screen and (max-width: 1280px) {
+      flex-direction: column;
+    }
   }
 }
 
@@ -90,6 +105,10 @@
   border-radius: 5px;
   padding: 10px;
   margin-right: 20px;
+  @media screen and (max-width: 1280px) {
+    margin-top: 20px; 
+    margin-right: 0px;
+  }
   .project-card-title{
     padding : 10px;
     display: flex;
@@ -119,26 +138,56 @@
       color : white;
       margin-bottom: 5px;
     }
+    p:last-of-type{
+      @media screen and (max-width: 850px){
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 300px;
+        white-space: nowrap;
+      }
+      @media screen and (max-width: 540px){
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 150px;
+        white-space: nowrap;
+      }
+    } 
   }
 }
 
-.turnBackBttn{
-  padding : 10px 20px;
-  float: right;
-  position:relative;
-  top : -50px;
-  .bttn{
-    background-color: #4a7ff8;
-    color: white;
+@media screen and (min-width: $tabletWidth) {
+  .turnBackBttn{
+    padding : 10px 20px;
+    float: right;
+    position:relative;
+    top : -50px;
+    .bttn{
+      background-color: #4a7ff8;
+      color: white;
+    }
   }
 }
+
+@media screen and (max-width: $tabletWidth) {
+  .turnBackBttn{
+    padding : 10px 20px;
+    .bttn{
+      background-color: #4a7ff8;
+      color: white;
+    }
+  }
+}
+
 .project-details-container{
   width: 95%;
   color: white;
   padding: 3%;
-  top: 100px;
+  top: 140px;
   position: relative;
   margin: auto;
+  @media screen and (max-width: $tabletWidth) {
+    top:170px;
+  }
   h2{
     font-family: $fontFamilyHeading;
   }
@@ -150,7 +199,9 @@
     .overviewPanel {
       padding:10px;
       width:35%;
-     
+      @media screen and (max-width: 1280px) {
+        width:100%;
+      }
       .overviewBody{
         position:relative;
         .logoDiv{
@@ -161,31 +212,73 @@
           right : 30px;
           border-radius: 50%;
         }
-        .contentStatements{
-          margin-bottom : 15px;
-          p{
-            color:white;
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 7px;
+        .content-div{
+          @media screen and (max-width: 1280px) {
+            display: flex;
+            flex-wrap: wrap;
+            .contentStatements{
+              flex: 50%;
+            }
+            .contentStatements2{
+              flex: 50%;
+              margin-top:60px;
+              @media screen and (max-width: 919px){
+                margin-top:0px;
+              }
+            }
           }
-          span{
-            color:grey;
-            font-size: 15px;
-            font-weight: 500;
+          .contentStatements{
+            margin-bottom : 15px;
+            p{
+              color:white;
+              font-size: 16px;
+              font-weight: 700;
+              margin-bottom: 7px;
+            }
+            span{
+              color:grey;
+              font-size: 15px;
+              font-weight: 500;
+            }
+            
+            a{
+              color:#4a7ff8;
+              font-size: 15px;
+              font-weight: 500;
+            }
           }
-          a{
-            color:#4a7ff8;
-            font-size: 15px;
-            font-weight: 500;
+          .contentStatements2{
+            margin-bottom : 15px;
+            p{
+              color:white;
+              font-size: 16px;
+              font-weight: 700;
+              margin-bottom: 7px;
+            }
+            span{
+              color:grey;
+              font-size: 15px;
+              font-weight: 500;
+              text-align: justify;
+              text-justify: inter-word
+            }
+            
+            a{
+              color:#4a7ff8;
+              font-size: 15px;
+              font-weight: 500;
+            }
           }
-        }
+        }  
       }
     }
     .chartPanel {
       padding:15px 30px;
       border-left: 1px solid #191a1a;
       width:75%;
+      @media screen and (max-width: 1280px) {
+        width:100%;
+      }
       .chart-body{
         .chart-title{
           min-width: 100%;
@@ -203,32 +296,197 @@
       } 
     }
   }
+  .project-card-area {
+    display: flex;
+    flex-direction: row;
+    @media screen and (max-width: 1280px) {
+      flex-direction: column;
+    }
+  }
+}
+// .tableDiv{
+//   overflow-x: auto;
+//   table {
+//     border: 1px solid #ccc;
+//     border-collapse: collapse;
+//     margin: 0;
+//     padding: 0;
+//     width: 100%;
+    
+//       tr{
+//         // background-color: #f8f8f8;
+//         border: 1px solid #191a1a;
+//         padding: .35em;
+//         // border-bottom: 1px solid #191a1a;
+//         height: 50px;
+//         th{
+//           text-align: center;
+//           padding:.625em;
+//           font-size: .85em;
+//           letter-spacing: .1em;
+//           text-transform: uppercase;
+//           border: 1px solid #191a1a;
+//         }
+//       }
+    
+    
+//       tr{
+//         border: 1px solid #191a1a;
+//         padding: .35em;
+//         // border-bottom: 1px solid #191a1a;
+//         height: 40px;
+//         td{
+//           text-align: center;
+//           padding:.625em;
+//           // font-size: .85em;
+//           // letter-spacing: .1em;
+//           // border-bottom: 1px solid #191a1a;
+//         }
+//       }
+    
+//   }
+//   @media screen and (max-width: 700px) {
+//     table {
+//       border: 0;
+//     }
+  
+//     table caption {
+//       font-size: 1.3em;
+//     }
+    
+//     table thead {
+//       border: none;
+//       clip: rect(0 0 0 0);
+//       height: 1px;
+//       margin: -1px;
+//       overflow: hidden;
+//       padding: 0;
+//       position: absolute;
+//       width: 1px;
+//     }
+    
+//     table tr {
+//       border-bottom: 3px solid #ddd;
+//       display: block;
+//       margin-bottom: .625em;
+//     }
+    
+//     table td {
+//       border-bottom: 1px solid #ddd;
+//       display: block;
+//       font-size: .8em;
+//       text-align: right;
+//     }
+    
+//     table td::before {
+//       /*
+//       * aria-label has no advantage, it won't be read inside a table
+//       content: attr(aria-label);
+//       */
+//       content: attr(data-label);
+//       float: left;
+//       font-weight: bold;
+//       text-transform: uppercase;
+//     }
+    
+//     table td:last-child {
+//       border-bottom: 0;
+//     }
+//   }
+  
+// }
+table {
+  border: 1px solid #191a1a;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-table {
-  width:100%;
-  border : 1px solid #191a1a;
-  border-radius: 7px;
-  thead{
-    background-color: #2d2d2d;
-    tr{
-      border-bottom: 1px solid #191a1a;
-      height: 50px;
-      th{
-        text-align: center;
-        padding:4px;
-      }
-    }
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+  font-weight: 800;
+}
+table thead tr{
+  height:45px;
+  background-color: #242525;
+}
+
+table tr {
+  // background-color: #f8f8f8;
+  border: 1px solid #191a1a;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 1000px) {
+  table {
+    border: 0;
   }
-  tbody {
-    tr{
-      
-      height: 45px;
-      td{
-        text-align: center;
-        padding:4px;
-        border-bottom: 1px solid #191a1a;
-      }
-    }
+
+  table caption {
+    font-size: 1.3em;
+    font-weight: 800;
+  }
+  
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+  
+  table td {
+    border-bottom: 1px solid #191a1a;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+  
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  table td:last-child {
+    border-bottom: 0;
   }
 }
+@media screen and (min-width: 1000px) {
+  .addressTd{
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+    white-space: nowrap;
+  }
+}
+
