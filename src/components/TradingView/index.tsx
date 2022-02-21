@@ -41,11 +41,10 @@ const TVChartContainer : React.FC<{
       })
       .catch((err) => console.info(err));
     if (dataCandle && dataCandle.length > 0 && ref.current) {
-      let currentwidth = ref.current.clientWidth
-      let realwidth = currentwidth + 40;
+      
       const chart = createChart(ref.current, {
-        // width: ref.current.clientWidth,
-        width: realwidth,
+        width: ref.current.clientWidth,
+        // width: realwidth,
         height: ref.current.clientHeight,
         layout: {
           backgroundColor: '#000000',
