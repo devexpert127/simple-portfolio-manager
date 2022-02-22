@@ -28,6 +28,14 @@ const Header = () => {
   useEffect(() => {
     void refetchSOL();
   }, [refetchSOL]);
+  const handleDisconnect = () =>{
+    try {
+      disconnect();
+    } catch (error) {
+      console.log(error)
+      alert("Disconnect wallet failed.")
+    }
+  }
   return (
     <nav className={styles_header.header}>
       <>
@@ -35,7 +43,7 @@ const Header = () => {
           <>
             <div className='psy-button-group'>
               <button onClick={() => {
-                void disconnect();
+                handleDisconnect();
               }}>Disconnect Wallet</button>
             </div>
             <ul>
