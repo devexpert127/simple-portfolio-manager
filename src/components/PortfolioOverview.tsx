@@ -48,7 +48,9 @@ const PortfolioOverview = () => {
     else {
       dispatch(updatedAccount({account : {pubKey:'',accountName:''}}))
       dispatch(updatedProjectOption({ projectOption : {} }))
+      dispatch(updatedMintInfo({ mintInfo : {} }))
       setLoadingProjects(true);
+      setLoadingMints(true);
     }
   }, [provider.connection, wallet]);
 
@@ -63,10 +65,6 @@ const PortfolioOverview = () => {
         dispatch(updatedMintInfo({ mintInfo : mints }))
         setLoadingMints(false);
       })();
-    }
-    else{
-      dispatch(updatedMintInfo({ mintInfo : {} }))
-        setLoadingMints(true);
     }
     
   }, [provider.connection, projectOption]);
