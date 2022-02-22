@@ -39,12 +39,16 @@ const PortfolioOverview = () => {
           // on wallet connect get all the options the user holds https://github.com/mithraiclabs/psyoptions-management/issues/3
           
           const temp = await getAllWalletOptions(program, projectList);
-          console.log('111111111111111111', temp)
           dispatch(updatedProjectOption({ projectOption : temp }))
           setLoadingProjects(false);
         })();
       }
       
+    }
+    else {
+      dispatch(updatedAccount({account : {pubKey:'',accountName:''}}))
+      dispatch(updatedProjectOption({ projectOption : {} }))
+      setLoadingProjects(true);
     }
   }, [provider.connection, wallet]);
 
@@ -56,10 +60,13 @@ const PortfolioOverview = () => {
           provider.connection,
           Object.values(projectOption)
         );
-        console.log('222222222222222222', mints)
         dispatch(updatedMintInfo({ mintInfo : mints }))
         setLoadingMints(false);
       })();
+    }
+    else{
+      dispatch(updatedMintInfo({ mintInfo : {} }))
+        setLoadingMints(true);
     }
     
   }, [provider.connection, projectOption]);

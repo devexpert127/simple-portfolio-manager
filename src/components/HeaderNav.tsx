@@ -30,7 +30,7 @@ const Header = () => {
   }, [refetchSOL]);
   const handleDisconnect = () =>{
     try {
-      disconnect();
+     disconnect();
     } catch (error) {
       console.log(error)
       alert("Disconnect wallet failed.")
