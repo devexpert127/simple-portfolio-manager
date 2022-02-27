@@ -25,12 +25,13 @@ export const useSerumOrderbook =  (
   const [loading, setLoading] = useState(false);
   const [orderbooks, setOrderbooks] = useSerumOrderbooks();
 
-  const serumMarket = serumMarkets[serumMarketAddress ?? '']?.serumMarket;
-
+  const serumMarket = serumMarkets[serumMarketAddress ?? '']?.serumMarket;  
+  
   useEffect(() => {
 
     if (serumMarket) {
       // initial load of the orderbook
+      
       (async () => {
         setLoading(true);
         try {
@@ -71,11 +72,8 @@ export const useSerumOrderbook =  (
     }
   }, [
     connection,
-    serumMarketAddress,
-    orderbooks,
-    pushNotification,
-    serumMarket,
     setOrderbooks,
+   
   ]);
 
   return {

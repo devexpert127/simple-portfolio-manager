@@ -31,16 +31,16 @@ export const useDeriveMultipleSerumMarketAddresses = (
         if (serumMarketAddress) {
           return new PublicKey(serumMarketAddress);
         }
-        const [address] = await serumUtils.deriveSerumMarketAddress(
-          program,
-          option.key,
-        );
+        const [address] = await serumUtils.deriveSerumMarketAddress(program, option.key, );
         return address;
       });
+      
       const derivedAddresses = await Promise.all(deriveSerumAddressesPromises);
+ 
       setSerumMarketKeys(derivedAddresses);
     })();
-  }, [options, program, _quoteMint, network]);
+  
+  }, [_quoteMint, network]);
 
   return serumMarketKeys;
 };

@@ -12,6 +12,10 @@ import { useLoadOptionsMintInfo } from './useLoadOptionsMintInfo';
 import { useLoadSerumDataByMarketAddresses } from './useLoadSerumDataByMarketKeys';
 import { useDeriveMultipleSerumMarketAddresses } from './useDeriveMultipleSerumMarketAddresses';
 import { useNormalizeAmountOfMintBN } from './useNormalizeAmountOfMintBN';
+import { useDispatch, useSelector } from "react-redux";
+import { TStore } from "../store";
+import { PublicKey } from '@solana/web3.js';
+import { OptionMarketWithKey } from '@mithraic-labs/psy-american';
 
 type ChainRow = {
   key: string;
@@ -23,9 +27,14 @@ type ChainRow = {
 /**
  *
  */
-export const useOptionsChainFromMarketsState = (): ChainRow[] => {
-  const options = useRecoilValue(selectOptionsByMarketsPageParams);
-  console.log('options is ', options)
+export const useOptionsChainFromMarketsState = (projectKey : any): ChainRow[] => {
+  const { projectOption} = useSelector((state: TStore) => state.projectReducer)
+  // const options = useRecoilValue(selectOptionsByMarketsPageParams);
+  const options_candi = projectOption[projectKey].options;
+  let options : OptionMarketWithKey[] = [];
+  options_candi.map((option)=>{
+    options.push(option.optionMarket)
+  })
   const serumAddresses = useDeriveMultipleSerumMarketAddresses(options);
   const _underlyingMint = useRecoilValue(underlyingMint);
   const _quoteMint = useRecoilValue(quoteMint);
@@ -39,7 +48,7 @@ export const useOptionsChainFromMarketsState = (): ChainRow[] => {
   useLoadOptionsMintInfo(options);
   useLoadSerumDataByMarketAddresses(serumAddresses);
 
-  return useMemo(() => {
+
     if (!_underlyingMint) {
       return [];
     }
@@ -91,12 +100,4 @@ export const useOptionsChainFromMarketsState = (): ChainRow[] => {
     return Object.values(chainObject).sort((rowA, rowB) =>
       rowA.strike.minus(rowB.strike).toNumber(),
     );
-  }, [
-    _underlyingAmountPerContract,
-    _underlyingMint,
-    normalizeQuoteAmountBN,
-    normalizeUnderlyingAmountBN,
-    options,
-    serumAddresses,
-  ]);
-};
+}

@@ -19,7 +19,7 @@ export const useSubscribeSerumOrderbook = (
   const { serumMarkets } = useSerum();
   const [, setOrderbooks] = useSerumOrderbooks();
   const serumMarket = serumMarkets[serumMarketAddress]?.serumMarket;
-
+ 
   useEffect(() => {
     if (serumMarket) {
       // subscribe to bid/ask on chain updates

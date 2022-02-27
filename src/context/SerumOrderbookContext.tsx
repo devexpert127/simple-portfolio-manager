@@ -28,7 +28,6 @@ export const DEFAULT_DEPTH = 40;
 
 export const SerumOrderbooksProvider: React.FC = ({ children }) => {
   const orderbookState = useState<SerumOrderbooks>({});
-  console.log('Here is SerumOrderbookContext page');
   return (
     <SerumOrderbookContext.Provider value={orderbookState}>
       {children}

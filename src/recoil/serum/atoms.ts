@@ -1,5 +1,6 @@
 import { OpenOrders } from '@project-serum/serum';
 import { atomFamily } from 'recoil';
+import { PriceFromOrdering } from '../../types'
 
 // OpenOrders can have multiple per Serum market
 /**
@@ -14,7 +15,10 @@ export const openOrdersByOptionKey = atomFamily<OpenOrders[], string>({
   default: [],
 });
 
-export const priceByAssets = atomFamily<number, string>({
+export const priceByAssets = atomFamily<PriceFromOrdering, string>({
   key: 'priceByAssets',
-  default: 0,
+  default: {
+            price : 0,
+            openPrice:0
+            },
 });

@@ -21,23 +21,17 @@ import { useOptionIsCall } from '../hooks/useOptionIsCall';
 import { useNormalizedStrikePriceFromOption } from '../hooks/useNormalizedStrikePriceFromOption';
 import { useTokenByMint } from '../hooks/useNetworkTokens';
 import { useNormalizeAmountOfMintBN } from '../hooks/useNormalizeAmountOfMintBN';
-import { OptionAccounts, Project, MintInfoWithKey, CallOrPut, SerumMarketAndProgramId } from '../types';
+import { Project, MintInfoWithKey, CallOrPut } from '../types';
 import { OptionMarketWithKey } from '@mithraic-labs/psy-american';
 import { Tokens } from "@mithraic-labs/psy-token-registry";
-import { useSerumPriceByAssets } from '../hooks/useSerumPriceByAssets'
+import { useSerumPriceByAssets } from '../hooks/useSerumPriceByAssets';
+import useSerum from '../hooks/useSerum';
 
-import { useOptionsChainFromMarketsState } from '../hooks/useOptionChainsFromMarketsState'
 import {
   quoteMint,
-  selectExpirationAsDate,
-  selectMintsOfFutureOptions,
   selectUnderlyingMintWithSideEffects,
-  underlyingAmountPerContract,
-  useUpdateLastOptionParamsByAssetPair,
 } from '../recoil';
 
-import useSerum from '../hooks/useSerum';
-import { calculateStrikePrecision } from '../utils/getStrikePrices';
 
 const TableBodyRow: React.VFC<{
   project : Project;
@@ -45,7 +39,8 @@ const TableBodyRow: React.VFC<{
   optionKey : PublicKey;
   mintInfos: Record<string, MintInfoWithKey>;
   index:number;
-}> = ({ project, optionAccount, optionKey, mintInfos,index }) => {
+  serumAddress : PublicKey;
+}> = ({ project, optionAccount, optionKey, mintInfos,index, serumAddress }) => {
   // const option = useRecoilValue(optionsMap(optionKey.toString()));
 
   const row_option = optionAccount;
@@ -60,8 +55,6 @@ const TableBodyRow: React.VFC<{
   const normalizeOptionQuote = useNormalizeAmountOfMintBN(
     mintInfos[row_option.underlyingAssetMint.toString()]?? null,
   );
-
-    useState(false);
 
 
   const expired = useMemo(() => {
@@ -125,111 +118,23 @@ const TableBodyRow: React.VFC<{
     : lockedAmount;
 
 ///////////////////////////////////   Market Info getting     ////////////////////////////////////////////
-    const rowTemplate = {
-      call: {
-        key: '',
-        change: '',
-        volume: '',
-        openInterest: '',
-        size: '',
-        emptyRow: true,
-        actionInProgress: false,
-      },
-      put: {
-        key: '',
-        change: '',
-        volume: '',
-        openInterest: '',
-        size: '',
-        emptyRow: true,
-        actionInProgress: false,
-      },
-    };
-    const chains = useOptionsChainFromMarketsState();
-    const [_underlyingMint, setUnderlyingMint] = useRecoilState(
-      selectUnderlyingMintWithSideEffects,
-    );
-    const [_quoteMint, setQuoteMint] = useRecoilState(quoteMint);
 
-    setUnderlyingMint(row_option.underlyingAssetMint)
-    setQuoteMint(row_option.quoteAssetMint)
 
-    const mints = useRecoilValue(selectMintsOfFutureOptions);
-    // const expirationDateString = useRecoilValue(selectExpirationAsDate);
-    const contractSize = useRecoilValue(underlyingAmountPerContract);
-    const underlyingAsset = useTokenByMint(_underlyingMint ?? '');
-    const { serumMarkets, fetchMultipleSerumMarkets } = useSerum();
-    const [round, setRound] = useState(true);
-    const [callPutData, setCallPutData] = useState({ type: 'call' } as CallOrPut);
-    const [initialMarkPrice, setInitialMarkPrice] = useState<number | null>(null);
-    const [limitPrice, setLimitPrice] = useState('0');
-    const rowsPerPage = 7;
-    const [page, setPage] = useState(0);
+    // const [_underlyingMint, setUnderlyingMint] = useRecoilState(
+    //   selectUnderlyingMintWithSideEffects,
+    // );
+    // const [_quoteMint, setQuoteMint] = useRecoilState(quoteMint);
 
-    const  markPrice = useSerumPriceByAssets(
+    // setUnderlyingMint(row_option.underlyingAssetMint)
+    // setQuoteMint(row_option.quoteAssetMint)
+
+    const  mark_open_Price = useSerumPriceByAssets(
         row_option.underlyingAssetMint.toString() ?? null,
         row_option.quoteAssetMint?.toString() ?? null,
+        serumAddress
       );
-
-      useEffect(() => {
-        if (!initialMarkPrice) {
-          setInitialMarkPrice(markPrice);
-        }
-      }, [initialMarkPrice, markPrice, setInitialMarkPrice]);
-
-      let precision = 0;
-      if (round && chains[0]?.strike) {
-        precision = calculateStrikePrecision(chains[0].strike);
-      }
+    const current_PnL = (mark_open_Price.price - mark_open_Price.openPrice )*parseInt(normalizedUnderlyingAmount.toString())
     
-      const filteredChain = chains;
-
-      const numberOfPages = Math.ceil(filteredChain.length / rowsPerPage);
-
-      const rowsToDisplay = useMemo(() => {
-        return filteredChain.slice(rowsPerPage * page, rowsPerPage * (page + 1));
-      }, [filteredChain, page]);
-
-      // handle pagination and add
-      const rows = useMemo(
-        () => [
-          ...rowsToDisplay,
-          ...Array(Math.max(rowsPerPage - rowsToDisplay.length, 0))
-            .fill(rowTemplate)
-            .map((row, i) => ({
-              ...row,
-              key: `empty-${i}`,
-            })),
-        ],
-        [rowsToDisplay],
-      );
-
-      useEffect(() => {
-        const serumKeys: SerumMarketAndProgramId[] = [];
-        rowsToDisplay.forEach(({ call, put }) => {
-          if (
-            call?.serumMarketKey &&
-            !serumMarkets[call.serumMarketKey.toString()]
-          ) {
-            serumKeys.push({
-              serumMarketKey: call.serumMarketKey,
-              serumProgramId: call.serumProgramId,
-            });
-          }
-          if (put?.serumMarketKey && !serumMarkets[put.serumMarketKey.toString()]) {
-            serumKeys.push({
-              serumMarketKey: put.serumMarketKey,
-              serumProgramId: put.serumProgramId,
-            });
-          }
-        });
-
-        if (serumKeys.length) {
-          fetchMultipleSerumMarkets(serumKeys);
-        }
-      }, [chains, rowsToDisplay, fetchMultipleSerumMarkets, serumMarkets]);
-  const canClose = (ownedOptionTokenAccounts?.[0]?.amount || 0) > 0;
-
   let ActionFragment: React.ReactNode = null;
   
 
@@ -245,6 +150,9 @@ const TableBodyRow: React.VFC<{
               {/* <td data-label="QuoteAmount"></td> */}
               <td data-label="QuoteSymbol">{quoteAssetSymbol}&nbsp;&nbsp;&nbsp;<img src={optionQuoteAsset.logoURI} style={{width:'20px', height:"20px"}}/></td>
               <td data-label="StrikePrice">$ {strike.toString()}</td>
+              <td data-label="MarkPrice">$ {mark_open_Price.price}</td>
+              <td data-label="OpenPrice">$ {mark_open_Price.openPrice}</td>
+              <td data-label="CurrentPnL">$ {current_PnL}</td>
               <td data-label="LockedAsset"><div>{lockedAmountDisplay} {optionUnderlyingAssetSymbol}</div></td>
               <td data-label="Action"><div>{ActionFragment}</div></td>
         </tr>

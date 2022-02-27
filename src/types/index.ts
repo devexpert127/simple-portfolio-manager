@@ -190,3 +190,8 @@ export type Result<T, E> = {
   response?: T;
   error?: E;
 };
+
+export type PriceFromOrdering = {
+  price: number,
+  openPrice: number
+}

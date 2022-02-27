@@ -92,6 +92,7 @@ const ProjectDetails: React.FC<DETProps> = ({match}) => {
             project = {projectOption[projectKey]?.project}
             optionAccounts={projectOption[projectKey].options}
             mintInfos = {mintInfo}
+            projectKey={projectKey}
           />
         </div>
     </div>
