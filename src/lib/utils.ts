@@ -30,7 +30,7 @@ export const getAllWalletOptions = async (
     // program.provider.wallet.publicKey,
     // { mint:new PublicKey('BzwRWwr1kCLJVUUM14fQthP6FJKrGpXjw3ZHTZ6PQsYa'), programId: TOKEN_PROGRAM_ID }
   );
-
+    console.log('111111111111111111111111111', resp)
   const tokenAccounts: Record<string, TokenAccount> = {};
   resp.value.forEach(({ account, pubkey }) => {
     const decoded = AccountLayout.decode(account.data);
@@ -39,7 +39,7 @@ export const getAllWalletOptions = async (
       address: pubkey,
       mint: new PublicKey(decoded.mint),
       owner: new PublicKey(decoded.owner),
-      amount: new u64(decoded.amount),
+      amount: new Number(decoded.amount),
       delegate: new PublicKey(decoded.delegate),
       isInitialized: decoded.state === 1,
       isNative: decoded.isNativeOption === 1,

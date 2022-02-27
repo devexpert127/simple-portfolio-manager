@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link } from 'react-router-dom';
 import { OptionMarket } from "@mithraic-labs/psy-american";
 import { Tokens } from "@mithraic-labs/psy-token-registry";
@@ -8,6 +8,13 @@ import { bnToFloat, formatStrike } from "../lib/utils";
 import { MintInfoWithKey, OptionAccounts, Project, TableData } from "../types";
 import OptionOverview from "./OptionOverview";
 import styles from "../styles/PortfolioOverview.module.scss";
+import { PublicKey } from '@solana/web3.js';
+import { useRecoilValue } from 'recoil';
+import { optionsMap } from '../recoil';
+import { useWrittenOptions } from '../hooks/useWrittenOptions';
+import { useOpenPositions } from '../hooks/useOpenPositions';
+import { useNormalizeAmountOfMintBN } from '../hooks/useNormalizeAmountOfMintBN';
+import TableBodyRow from "./TableBodyRow";
 
 const TablePanle: React.FC<{
   project : Project;
@@ -21,7 +28,14 @@ const TablePanle: React.FC<{
   const [tableData, setTableData] = useState<TableData[]>([]);
   let tableData_bump : TableData[]=[];
 
-  useEffect(() => {
+  const writtenOptions = useWrittenOptions();
+  const writtenOptionKeys = useMemo(
+    () => Object.keys(writtenOptions).map((key) => new PublicKey(key)),
+    [writtenOptions],
+  );
+
+    
+   useEffect(() => {
     optionAccounts.map((x, index)=>{
       
       let expirationTime = new Date(x.optionMarket.expirationUnixTimestamp.toNumber() * 1000);
@@ -77,29 +91,28 @@ const TablePanle: React.FC<{
         <thead>
           <tr>
             <th scope="col">No</th>
-            <th scope="col">Exp Date</th>
-            <th scope="col">Underling Amount</th>
-            <th scope="col">Underling Symbol</th>
-            <th scope="col">Quote Amount</th>
-            <th scope="col">Quote Symbol</th>
-            <th scope="col">Mint Fee Account</th>
-            <th scope="col">Exercise Fee Account</th>
+            <th scope="col">Expiration</th>
+            <th scope="col">Option Type</th>
+            <th scope="col">Underlying Asset</th>
+            <th scope="col">Contract Size</th>
+            <th scope="col">Quote Asset</th>
+            <th scope="col">Strike Price</th>
+            <th scope="col">Locked Asset</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
       
         <tbody>
-          {tableData.map((tdata, idx)=>(
-            <tr key={idx}>
-              {idx==0?(<td data-label="ID">{idx + 1}</td>):
-              <td data-label="ID" scope="row">{idx + 1}</td>}
-              <td data-label="ExpDate">{tdata.expDate}</td>
-              <td data-label="UnderAmount">{tdata.underAmount}</td>
-              <td data-label="UnderSymbol">{tdata.unerSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.underLogo} style={{width:'20px', height:"20px"}}/></td>
-              <td data-label="QuoteAmount">{tdata.quoteAmount}</td>
-              <td data-label="QuoteSymbol">{tdata.quoteSymbol}&nbsp;&nbsp;&nbsp;<img src={tdata.quoteLogo} style={{width:'20px', height:"20px"}}/></td>
-              <td data-label="MintFee"><div className={styles['addressTd']}>{tdata.mintFeeAcc}</div></td>
-              <td data-label="ExerFee"><div className={styles['addressTd']}>{tdata.exerciseFeeAcc}</div></td>
-            </tr>
+          
+          {optionAccounts.map((option, index) => (
+            <TableBodyRow
+              key={option.optionMarket.key.toString()}
+              project={project}
+              optionAccount={option.optionMarket}
+              optionKey = {option.optionMarket.key}
+              mintInfos={mintInfos}
+              index={index}
+            />
           ))}
            
         </tbody>

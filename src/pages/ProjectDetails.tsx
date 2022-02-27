@@ -34,7 +34,7 @@ const ProjectDetails: React.FC<DETProps> = ({match}) => {
 
   useEffect(()=>{
     let symbol = projectOption[projectKey]?.project.symbol
-    const url = "https://powerful-beach-55472.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?convert=USD&symbol=" + symbol
+    const url = "https://fierce-river-36860.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?convert=USD&symbol=" + symbol
     fetch(
       url,{
         headers: {

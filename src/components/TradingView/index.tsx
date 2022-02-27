@@ -19,7 +19,7 @@ const TVChartContainer : React.FC<{
     let lowerCaseName = project.name.toLowerCase();
     let marketName = lowerCaseName.replace(' ', '-')
     fetch(
-      `https://powerful-beach-55472.herokuapp.com/https://api.coingecko.com/api/v3/coins/${marketName}/ohlc?vs_currency=usd&days=30`
+      `https://fierce-river-36860.herokuapp.com/https://api.coingecko.com/api/v3/coins/${marketName}/ohlc?vs_currency=usd&days=30`
     )
       .then((res) => res.json())
       .then((rowData  : CandleChartData[]=[]) => {

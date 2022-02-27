@@ -34,9 +34,16 @@ const PortfolioOverview = () => {
           new PublicKey("R2y9ip6mxmWUj4pt54jP2hz2dgvMozy9VTSwMWE7evs"),
           anchorProvider
         );
-        
+
+        console.log('Local program is ', program);
+        // dispatch(updatedProgram({programRe : program}));
         (async () => {
           // on wallet connect get all the options the user holds https://github.com/mithraiclabs/psyoptions-management/issues/3
+          const accountInfo = await program.provider.connection.getAccountInfo(
+            new PublicKey('FsEBBfyVUgC92K3hB2GQywv56vsUgYjGgDARoeDLxUyn')
+          );
+          // console.log('Redux program is ', programRe)
+          console.log('Account Info is ', accountInfo)
           
           const temp = await getAllWalletOptions(program, projectList);
           dispatch(updatedProjectOption({ projectOption : temp }))

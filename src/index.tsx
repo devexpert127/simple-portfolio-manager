@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
 import {
@@ -23,43 +24,55 @@ import TreasuryNew from './pages/TreasuryNew';
 import TreasuryEdit from './pages/TreasuryEdit';
 import ProjectDetails from './pages/ProjectDetails';
 import { store } from './store'
+import Store from './context/store';
+import { RecoilRoot } from 'recoil';
 
 const ConnectWallet = () => (<>Connect Wallet <ConnectWalletButton /></>);
 const DisconnectWallet = () => (<>Disconnect Wallet</>);
 
+const AppWithStore: React.FC = ({ children }) => {
+  return <>{children}</>;
+};
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <WalletKitProvider
-        defaultNetwork='devnet'
-        app={{
-          name: 'PsyOptions Management'
-        }}
-        >
-        {/* <div className={styles.app}> */}
-        <div>
-          <HeaderNav />
-          <Router>
-            {/* <main className={styles.main}> */}
-              {/* <section className={styles.section}> */}
-                <Switch>
-                  <Route exact path='/contributor' component={Contributor} />
-                  <Route exact path='/contributor/edit/:publicKey' component={ContributorEdit} />
-                  <Route exact path='/projectdetails/view/:projectKey' component={ProjectDetails} />
-                  <Route exact path='/contributor/new' component={ContributorNew} />
-                  <Route exact path='/treasury' component={Treasury} />
-                  <Route exact path='/treasury/edit/:publicKey' component={TreasuryEdit} />
-                  <Route exact path='/treasury/new' component={TreasuryNew} />
-                  <Route exact path='/' component={Home} />
-                  <Route exact path={['/connect','/login','/signin']} component={ConnectWallet} />
-                  <Route exact path={['/disconnect','/logout','/signout']} component={DisconnectWallet} />
-                </Switch>
-              {/* </section> */}
-            {/* </main> */}
-          </Router>
-        </div>
-      </WalletKitProvider>
-    </Provider>
+    <RecoilRoot>
+      <Provider store={store}>
+        <WalletKitProvider
+          defaultNetwork='devnet'
+          app={{
+            name: 'PsyOptions Management'
+          }}
+          >
+          {/* <div className={styles.app}> */}
+          <div>
+            <HeaderNav />
+            <Store>
+              <AppWithStore>
+                <Router>
+                  {/* <main className={styles.main}> */}
+                    {/* <section className={styles.section}> */}
+                      <Switch>
+                        <Route exact path='/contributor' component={Contributor} />
+                        <Route exact path='/contributor/edit/:publicKey' component={ContributorEdit} />
+                        <Route exact path='/projectdetails/view/:projectKey' component={ProjectDetails} />
+                        <Route exact path='/contributor/new' component={ContributorNew} />
+                        <Route exact path='/treasury' component={Treasury} />
+                        <Route exact path='/treasury/edit/:publicKey' component={TreasuryEdit} />
+                        <Route exact path='/treasury/new' component={TreasuryNew} />
+                        <Route exact path='/' component={Home} />
+                        <Route exact path={['/connect','/login','/signin']} component={ConnectWallet} />
+                        <Route exact path={['/disconnect','/logout','/signout']} component={DisconnectWallet} />
+                      </Switch>
+                    {/* </section> */}
+                  {/* </main> */}
+                </Router>
+              </AppWithStore>
+            </Store>
+          </div>
+        </WalletKitProvider>
+      </Provider>
+    </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')
 );

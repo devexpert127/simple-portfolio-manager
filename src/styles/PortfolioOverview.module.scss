@@ -106,9 +106,9 @@
   
   .project-card-area {
     display: flex;
-    flex-direction: row;
-    max-width: 100%;
-    overflow-x: auto;
+    flex-direction: column;
+    max-height: 560px;
+    overflow-y: auto;
     @media screen and (max-width: 1280px) {
       flex-direction: column;
     }
@@ -121,7 +121,7 @@
   border-left: 7px solid #4a7ff8;
   border-radius: 5px;
   padding: 10px;
-  margin-right: 20px;
+  margin-top: 20px;
   @media screen and (max-width: 1280px) {
     margin-top: 20px; 
     margin-right: 0px;
