@@ -24,6 +24,7 @@
     "@sentry/tracing": "^6.2.1",
     "@sentry/webpack-plugin": "^1.15.1",
     "@solana/spl-token": "^0.1.8",
+    "@solana/web3.js": "^1.22.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
