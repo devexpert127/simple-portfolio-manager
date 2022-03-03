@@ -78,9 +78,8 @@ export const batchSerumMarkets = async (
       const programId = new PublicKey(key);
       // Load all of the MarketState data
       const groupOfAddresses: PublicKey[][] = chunkArray(addresses, 100);
-      const getMultipleAccountsForAddresses: Promise<
-        (AccountInfo<Buffer> | null)[]
-      >[] = groupOfAddresses.map((addresses) => {
+      // @ts-ignore
+      const getMultipleAccountsForAddresses: Promise< (AccountInfo<Buffer> | null)[] >[] = groupOfAddresses.map((addresses) => {
         return connection.getMultipleAccountsInfo(addresses);
       });
       const addressesAccounts = await Promise.all(
@@ -112,9 +111,8 @@ export const batchSerumMarkets = async (
           orderbookKeys.push(d.asks);
         });
         const groupOfMintKeys: PublicKey[][] = chunkArray(mintKeys, 100);
-        const getMultipleAccountsForMintKeys: Promise<
-          (AccountInfo<Buffer> | null)[]
-        >[] = groupOfMintKeys.map((mintKeys) => {
+        // @ts-ignore
+        const getMultipleAccountsForMintKeys: Promise<(AccountInfo<Buffer> | null)[]>[] = groupOfMintKeys.map((mintKeys) => {
           return connection.getMultipleAccountsInfo(mintKeys);
         });
         const mintKeysAccounts = await Promise.all(
@@ -126,9 +124,8 @@ export const batchSerumMarkets = async (
           orderbookKeys,
           100,
         );
-        const getMultipleAccountsForOrderbookKeys: Promise<
-          (AccountInfo<Buffer> | null)[]
-        >[] = groupOfOrderbookKeys.map((orderbookKeys) => {
+        // @ts-ignore
+        const getMultipleAccountsForOrderbookKeys: Promise< (AccountInfo<Buffer> | null)[] >[] = groupOfOrderbookKeys.map((orderbookKeys) => {
           return connection.getMultipleAccountsInfo(orderbookKeys);
         });
         const orderbookKeysAccounts = await Promise.all(

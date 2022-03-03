@@ -106,22 +106,26 @@
   
   .project-card-area {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     max-height: 560px;
-    overflow-y: auto;
+    overflow-x: auto;
     @media screen and (max-width: 1280px) {
       flex-direction: column;
+      overflow-y: auto;
     }
   }
 }
 
-
+.holdingTitle{
+  padding : 3rem 1rem 
+}
 .project-card-container {
   border : 1px solid #191a1a;
   border-left: 7px solid #4a7ff8;
   border-radius: 5px;
   padding: 10px;
-  margin-top: 20px;
+  margin-right: 20px;
+  position: relative;
   @media screen and (max-width: 1280px) {
     margin-top: 20px; 
     margin-right: 0px;
@@ -169,6 +173,40 @@
         white-space: nowrap;
       }
     } 
+  }
+  .toForward{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    position: absolute;
+    top: 40%;
+    right: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toForward:hover{
+    
+      border-radius: 50%;
+      background-color: grey;
+    
+  }
+  .toExercise{
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    border: 1px solid wheat;
+    position: absolute;
+    top: 40%;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toExercise:hover{
+    
+      border-radius: 5px;
+      background-color: grey;
+    
   }
 }
 

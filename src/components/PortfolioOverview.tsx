@@ -11,17 +11,21 @@ import { getAllWalletOptions, loadMintInfo } from "../lib/utils";
 import projectList from "../content/projectList.json";
 import { CircularProgress } from "@material-ui/core";
 import ProjectOverview from "./ProjectOverview";
+import { ContactlessOutlined } from "@material-ui/icons";
+import OptionsArea from "./OptionsArea";
 
 const PortfolioOverview = () => {
+  
   const dispatch = useDispatch();
-  const { projectOption, account, mintInfo } = useSelector((state: TStore) => state.projectReducer)
+  const { projectOption, account, mintInfo, projectKey } = useSelector((state: TStore) => state.projectReducer)
   const wallet = useConnectedWallet();
+  
   const { provider } = useSolana();
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [loadingMints, setLoadingMints] = useState(true);
   
   useEffect(() => {
-      
+    
     if (wallet && wallet.connected) {
       // TODO put the Program into a higher order component
       if(Object.keys(projectOption).length <= 0){
@@ -85,26 +89,40 @@ const PortfolioOverview = () => {
           <br/>
           <p><span>Owner Address : &nbsp;&nbsp;</span> {account.pubKey} </p>
       </div>
-      <div className={styles['project-area']}>
+      <div className={styles['project-area']} >
         <div className={styles["project-area-title"]}>
           <h2>My Projects</h2>
           <p>Total : &nbsp;&nbsp;{Object.keys(projectOption).length} &nbsp; projects</p>
         </div>
-          <div className={styles["project-card-area"]}>
-            {loadingProjects || Object.keys(mintInfo).length <= 0 ? (
-              <CircularProgress />
-            ) : (
-              Object.keys(projectOption).map((key) => (
-                <ProjectOverview
-                  key={key}
-                  project={projectOption[key].project}
-                  optionAccounts={projectOption[key].options}
-                  mintInfos={mintInfo}
-                />
-              ))
-            )}
-          </div>
+        <div className={styles["project-card-area"]}>
+          {loadingProjects || Object.keys(mintInfo).length <= 0 ? (
+            <CircularProgress />
+          ) : (
+            Object.keys(projectOption).map((key) => (
+              <ProjectOverview
+                key={key}
+                project={projectOption[key].project}
+                optionAccounts={projectOption[key]?.options}
+                mintInfos={mintInfo}
+              />
+            ))
+          )}
         </div>
+      </div>
+      <div className={styles['holdingTitle']}>
+        <h1>Holdings</h1>
+      </div>
+      {loadingProjects || Object.keys(mintInfo).length <= 0?(
+        null
+      ):(
+        <div className={styles['project-area']}  style={{marginTop:'0px'}}>
+          <div className={styles["project-area-title"]}>
+            <h2>{projectKey}</h2>
+              <p>Total : &nbsp;&nbsp;{Object.keys(projectOption[projectKey]?.options).length} &nbsp; options</p>
+          </div>
+          <OptionsArea />
+        </div>
+      )}
     </div>
   );
 };

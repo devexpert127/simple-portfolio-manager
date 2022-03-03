@@ -10,8 +10,12 @@ export const truncatePublicKey = (pk: string): string =>
 /**
  * Take in a unix seconds timestamp and return a UTC string
  */
-export const formatExpirationTimestamp = (value: number): string =>
-  new Date(value * 1000).toUTCString();
+export const formatExpirationTimestamp = (value: number): string =>{
+  const fullDate = new Date(value * 1000).toISOString();
+  const realDate = fullDate.substring(0,10);
+  return realDate;
+}
+
 
 /**
  * Format an option timestamp using the expiration BN

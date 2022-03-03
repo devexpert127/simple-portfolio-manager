@@ -21,9 +21,8 @@ export const useBatchLoadMints = (mints: PublicKey[]) => {
     (async () => {
       try {
         const groupOfMints: PublicKey[][] = chunkArray(mints, 100);
-        const getMultipleAccountsInfoPromises: Promise<
-          (AccountInfo<Buffer> | null)[]
-        >[] = groupOfMints.map((mints) => {
+        // @ts-ignore
+        const getMultipleAccountsInfoPromises: Promise<(AccountInfo<Buffer> | null)[]>[] = groupOfMints.map((mints) => {
           return connection.getMultipleAccountsInfo(mints);
         });
         const results = await Promise.all(getMultipleAccountsInfoPromises);

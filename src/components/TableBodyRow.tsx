@@ -46,7 +46,6 @@ const TableBodyRow: React.VFC<{
   const row_option = optionAccount;
   const writtenOptions = useWrittenOptions();
   const writerTokenAccounts = writtenOptions[optionKey.toString()] ?? [];
-
 //   const { formFactor } = useScreenSize();
   const { ownedTokenAccounts } = useOwnedTokenAccounts();
   const normalizeOptionUnderlying = useNormalizeAmountOfMintBN(
@@ -120,13 +119,6 @@ const TableBodyRow: React.VFC<{
 ///////////////////////////////////   Market Info getting     ////////////////////////////////////////////
 
 
-    // const [_underlyingMint, setUnderlyingMint] = useRecoilState(
-    //   selectUnderlyingMintWithSideEffects,
-    // );
-    // const [_quoteMint, setQuoteMint] = useRecoilState(quoteMint);
-
-    // setUnderlyingMint(row_option.underlyingAssetMint)
-    // setQuoteMint(row_option.quoteAssetMint)
 
     const  mark_open_Price = useSerumPriceByAssets(
         row_option.underlyingAssetMint.toString() ?? null,
