@@ -33,17 +33,17 @@ interface TabContainerProps {
   children?: React.ReactNode;
 }
 
-function TabContainer(props: TabContainerProps) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children + " " + props.id}
-    </Typography>
-  );
-}
+// function TabContainer(props: TabContainerProps) {
+//   return (
+//     <Typography component="div" style={{ padding: 8 * 3 }}>
+//       {props.children + " " + props.id}
+//     </Typography>
+//   );
+// }
 
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired
-};
+// TabContainer.propTypes = {
+//   children: PropTypes.node.isRequired
+// };
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -121,7 +121,7 @@ const ProjectDetails: React.FC<DETProps> = ({match}) => {
           <Tabs value={value} onChange={handleChange}>
             <Tab label="Project Overview" />
             <Tab label="Holdings" />
-            <Tab label="Exercise" />
+            {/* <Tab label="Exercise" /> */}
           </Tabs>
         </AppBar>
         {value === 0 && <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -194,10 +194,10 @@ const ProjectDetails: React.FC<DETProps> = ({match}) => {
                           </div>
                         </Typography>
         }
-        {value === 2 && <TabContainer id={3}>
+        {/* {value === 2 && <TabContainer id={3}>
                           Exercise Simulation page (comming soon)
                         </TabContainer>
-        }
+        } */}
     </div>
   
   );

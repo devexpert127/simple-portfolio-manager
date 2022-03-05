@@ -63,11 +63,11 @@ const IndividualOption: React.FC<{
           ):null}
         </div>
         {isExpired == true ? (
-          <Link to={`/`}>
+          <a href="https://trade.psyoptions.io/#/portfolio" target={'blank'}>
             <div className={styles['toExercise']}>
                 Exercise
             </div>
-          </Link>
+          </a>
         ):null} 
       </div>
     
