@@ -161,13 +161,14 @@ const ProjectDetails: React.FC<DETProps> = ({match}) => {
                                       Exercising your options refers to puchasing a number of shares Guestbook Rewards, Inc. is offering you at a specific price during a set period of time.
                                     </div>
                                     <div style={{minHeight:'4rem', display:'flex', alignItems:'flex-end', justifyContent:'end'}}>
-                                      <Button 
-                                        variant = "contained"
-                                        onClick={(e)=> handleGoBack(e, 'clicked')}
-                                        className={styles['bttn']}
-                                      >
-                                        Exercise
-                                      </Button>
+                                    <a href="https://trade.psyoptions.io/#/portfolio" target={'_blank'}>
+                                        <Button 
+                                          variant = "contained"
+                                          className={styles['bttn']}
+                                        >
+                                          Exercise
+                                        </Button>
+                                      </a>
                                     </div>
                                   </div>
                                 </Box>
