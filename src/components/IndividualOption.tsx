@@ -51,7 +51,7 @@ const IndividualOption: React.FC<{
           <div className={styles['project-logo']}>
             <img src={quoteToken.logoURI} style={{width:'30px', height:'30px'}}/>
           </div>
-          <span className={styles['project-title']}>{underlyingToken.symbol.toString()} - {quoteToken.symbol.toUpperCase()} </span>
+          <span className={styles['project-title']}>{underlyingToken.symbol.toUpperCase()} - {quoteToken.symbol.toUpperCase()} </span>
         </div>
         <div className={styles['project-card-body']}>
           <p className={styles['project-description']}>&nbsp;</p>
