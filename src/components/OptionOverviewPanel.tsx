@@ -53,11 +53,11 @@ const OptionOverviewPanel: React.FC<{
           <span>{optionsVested} </span>  
         </div>
         <div className={styles['contentStatements']}>
-          <p>Options EXercised</p>
+          <p>Options Exercised</p>
           <span>{optionsExercised} </span>  
         </div>
         <div className={styles['contentStatements']}>
-          <p>Options EXercisable today</p>
+          <p>Options Exercisable today</p>
           <span>{optionsExercisable}</span>  
         </div>
       </div>

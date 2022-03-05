@@ -117,7 +117,7 @@ const PortfolioOverview = () => {
       ):(
         <div className={styles['project-area']}  style={{marginTop:'0px'}}>
           <div className={styles["project-area-title"]}>
-            <h2>{projectKey}</h2>
+            <h2>{projectOption[projectKey].project.name}</h2>
               <p>Total : &nbsp;&nbsp;{Object.keys(projectOption[projectKey]?.options).length} &nbsp; options</p>
           </div>
           <OptionsArea />

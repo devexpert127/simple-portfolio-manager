@@ -206,7 +206,7 @@ const TablePanle: React.FC<{
               <th scope="col">Origin Grant</th>
               <th scope="col">Vested</th>
               <th scope="col">Exercised</th>
-              <th scope="col">Exerciseable</th>
+              <th scope="col">Exercisable</th>
               <th scope="col">Strike Price</th>
             </tr>
           </thead>
