@@ -21,10 +21,13 @@ export const useSerumPriceByAssets = (
   quoteMint: PublicKey | string | null,
   serumaddress:PublicKey,
 ): PriceFromOrdering  => {
+  // console.log('underlying mint is ', baseMint, '\nquote mint is ', quoteMint, '\nserum Address is ',serumaddress)
   const { connection, dexProgramId } = useConnection();
+
   const { setSerumMarkets } = useSerum();
   const [serumMarketAddress, setSerumMarketAddress] =
     useState<PublicKey | null>(serumaddress);
+    // setSerumMarketAddress(serumaddress)
   const baseMintStr =
     baseMint instanceof PublicKey ? baseMint.toString() : baseMint;
   const quoteMintStr =
@@ -58,11 +61,12 @@ export const useSerumPriceByAssets = (
         quoteMintKey,
         dexProgramId,
       );
+      console.log('===========================================================================================================', market)
       if (!market) {
         
         return;
       } 
-    
+      
       setSerumMarkets((_markets) => ({
         ..._markets,
         [market.address.toString()]: {
@@ -72,11 +76,13 @@ export const useSerumPriceByAssets = (
       }));
       setSerumMarketAddress(market.address);
     })();
-    // console.log('Serum marketaddress is ', serumMarketAddress)
+    
+    
   }, [baseMint, connection, dexProgramId, quoteMint, setSerumMarkets]);
 
   useEffect(() => {
-    // console.log('Underlying Order book is ', underlyingOrderbook)
+    console.log('Serum Market Address is ',serumMarketAddress)
+    console.log('Underlying der book is ', underlyingOrderbook)
     if (underlyingOrderbook) {
       const _price = getPriceFromSerumOrderbook(underlyingOrderbook);
       const _openPrice = getOpenPriceFromSerumOrderbook(underlyingOrderbook)

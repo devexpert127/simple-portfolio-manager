@@ -236,7 +236,7 @@
 .project-details-container{
   width: 95%;
   color: white;
-  padding: 3%;
+  padding: 1% 3%;
   top: 140px;
   position: relative;
   margin: auto;
@@ -482,7 +482,6 @@ table {
   padding: 0;
   width: 100%;
   position : relative;
-  table-layout: fixed;
 }
 
 table caption {
@@ -500,6 +499,13 @@ table tr {
   border: 1px solid #191a1a;
   padding: .35em;
 }
+table tfoot{
+  height:45px;
+  background-color: #242525;
+  position :sticky;
+  inset-block-end: 0;
+  z-index: 110;
+}
 
 table th,
 table td {
@@ -512,7 +518,7 @@ table th {
   letter-spacing: .1em;
   text-transform: uppercase;
   position : sticky;
-  top: 0px;
+  top: -1px;
   background-color: #242525;
   z-index: 100;
 }

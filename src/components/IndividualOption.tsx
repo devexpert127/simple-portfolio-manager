@@ -40,8 +40,6 @@ const IndividualOption: React.FC<{
   const currentDate = new Date().getTime();
   const isExpired = option.optionMarket.expirationUnixTimestamp.toNumber()*1000 < currentDate?true:false;
 
-  console.log('TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT', quoteToken)
-  console.log('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM', option.optionMarket)
   return (
     
       <div className={styles["project-card-container"]} style={{minWidth:'30%', marginBottom:'20px', borderLeft: '5px solid #05a823'}}>

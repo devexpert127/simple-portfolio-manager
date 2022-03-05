@@ -19,6 +19,7 @@ const ProjectOverview: React.FC<{
   optionAccounts,
   mintInfos
 }) => {
+  console.log('THis project is ', project)
   const dispatch = useDispatch();
   const { projectKey } = useSelector((state: TStore) => state.projectReducer)
 

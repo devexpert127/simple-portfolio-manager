@@ -195,3 +195,10 @@ export type PriceFromOrdering = {
   price: number,
   openPrice: number
 }
+
+export type TotalItems = {
+  granted : number,
+  vested : number,
+  exercised : number,
+  exerciseable : number,
+}

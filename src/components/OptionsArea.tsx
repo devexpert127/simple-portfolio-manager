@@ -28,8 +28,9 @@ const OptionArea = () => {
     {loadingProjects || Object.keys(mintInfo).length <= 0 ? (
       <CircularProgress />
     ) : (
-      projectOption[projectKey].options.map((inOp) => (
+      projectOption[projectKey].options.map((inOp, index) => (
         <IndividualOption
+          key={index}
           option={inOp}
           mintInfos={mintInfo}
         />

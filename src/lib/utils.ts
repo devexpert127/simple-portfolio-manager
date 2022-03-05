@@ -23,14 +23,13 @@ export const getAllWalletOptions = async (
   
   const optionMarkets = await getAllOptionAccounts(program);
   // Load all SPL Mint addresses of the connected walletKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
-  
   const resp = await program.provider.connection.getTokenAccountsByOwner(
     new PublicKey('Hq3XnZMfjUvcKitYMB1abYshRZnufS1sSovzRztGXg8s'),
     { mint:new PublicKey('2GzKsbGV5TwXrzAKTiCu8jq9d5KWkzuNFv2rpZPJHxvB') }
     // program.provider.wallet.publicKey,
     // { mint:new PublicKey('BzwRWwr1kCLJVUUM14fQthP6FJKrGpXjw3ZHTZ6PQsYa'), programId: TOKEN_PROGRAM_ID }
   );
-    console.log('111111111111111111111111111', resp)
+
   const tokenAccounts: Record<string, TokenAccount> = {};
   resp.value.forEach(({ account, pubkey }) => {
     const decoded = AccountLayout.decode(account.data);

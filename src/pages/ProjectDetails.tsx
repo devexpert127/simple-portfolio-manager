@@ -1,36 +1,86 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {useHistory} from 'react-router-dom'
+import PropTypes from "prop-types";
+import {useRecoilState} from 'recoil';
 import { Button } from "@material-ui/core";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box"
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
 import { TStore } from "../store";
 
 import styles from "../styles/PortfolioOverview.module.scss";
+import '../styles/extraStyle.css';
 
 import { CircularProgress } from "@material-ui/core";
 
 import OverviewPanel from "../components/OverviewPanel";
+import OptionOverviewPanel from "../components/OptionOverviewPanel";
 import ChartPanel from "../components/ChartPanel";
 import TablePanel from "../components/TablePanel";
-import Details from "../components/Details";
-import { green } from "@material-ui/core/colors";
-
+import ConvertibleTable from "../components/ConvertibleTable";
+import { underlyingAmountPerContract, underlyingMint } from "../recoil";
 
 type DETProps = {
   match: any;
 };
+
+interface TabContainerProps {
+  id: number;
+  children?: React.ReactNode;
+}
+
+function TabContainer(props: TabContainerProps) {
+  return (
+    <Typography component="div" style={{ padding: 8 * 3 }}>
+      {props.children + " " + props.id}
+    </Typography>
+  );
+}
+
+TabContainer.propTypes = {
+  children: PropTypes.node.isRequired
+};
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      
+    }
+  })
+);
+
 const ProjectDetails: React.FC<DETProps> = ({match}) => {
   
   const projectKey = match.params.projectKey;
 
   const history = useHistory();
+  const [value, setValue] = useState(0);
+  // const [quotemint, setQuoteMint] = useRecoilState(quoteMint);
+  const [underlyingmint, setUnderlyingMint] = useRecoilState(underlyingMint);
+  const [underlyingamountpercontract, setUnderlyingAmountPerContract] = useRecoilState(underlyingAmountPerContract);
 
   const { projectOption, account, mintInfo } = useSelector((state: TStore) => state.projectReducer)
+  
   
   const handleGoBack = (event:React.MouseEvent<HTMLElement>, text: string) =>{
     history.push('/');
   }
 
   const [currentPrice, setCurrentPrice] = useState(0);
+
+  function handleChange(event: React.ChangeEvent<{}>, newValue: number) {
+    setValue(newValue);
+  }
+
+  useEffect(()=>{
+    let thefirstOption = projectOption[projectKey]?.options[0].optionMarket;
+    setUnderlyingMint(thefirstOption.underlyingAssetMint);
+    setUnderlyingAmountPerContract(thefirstOption.underlyingAmountPerContract);
+  },[projectOption])
 
   useEffect(()=>{
     let symbol = projectOption[projectKey]?.project.symbol
@@ -67,34 +117,87 @@ const ProjectDetails: React.FC<DETProps> = ({match}) => {
             </Button>
           </div>
         </div>
-        <div className={styles["project-card-area"]}>
-          <div className={styles['overviewPanel']}>
-            <OverviewPanel 
-              project = {projectOption[projectKey]?.project}
-              account = {account}
-            />
-          </div>
-          <div className={styles['chartPanel']}>
-            <ChartPanel
-              project={projectOption[projectKey]?.project}
-              optionAccounts={projectOption[projectKey].options}
-              mintInfos = {mintInfo}
-            />
-            {/* <Details
-              project = {projectOption[projectKey]?.project}
-              optionAccounts={projectOption[projectKey].options}
-              mintInfos = {mintInfo}
-            /> */}
-          </div>
-        </div>
-        <div className={styles['tablePanel']}>
-          <TablePanel
-            project = {projectOption[projectKey]?.project}
-            optionAccounts={projectOption[projectKey].options}
-            mintInfos = {mintInfo}
-            projectKey={projectKey}
-          />
-        </div>
+        <AppBar position="static">
+          <Tabs value={value} onChange={handleChange}>
+            <Tab label="Project Overview" />
+            <Tab label="Holdings" />
+            <Tab label="Exercise" />
+          </Tabs>
+        </AppBar>
+        {value === 0 && <Typography component="div" style={{ padding: 8 * 3 }}>
+                            <div className={styles["project-card-area"]}>
+                              <div className={styles['overviewPanel']}>
+                                <OverviewPanel 
+                                  project = {projectOption[projectKey]?.project}
+                                  account = {account}
+                                />
+                              </div>
+                              <div className={styles['chartPanel']}>
+                                <ChartPanel
+                                  project={projectOption[projectKey]?.project}
+                                  optionAccounts={projectOption[projectKey].options}
+                                  mintInfos = {mintInfo}
+                                />
+                              </div>
+                            </div>
+                        </Typography>
+        }
+        {value === 1 && <Typography component="div" style={{ padding: 8 * 3 }}>
+                            <div className={styles["project-card-area"]} style={{borderBottom:'1px solid #242525', paddingBottom:20}}>
+                              <div className={styles['overviewPanel']}>
+                                <OptionOverviewPanel 
+                                  project = {projectOption[projectKey]?.project}
+                                />
+                              </div>
+
+                              <div className={styles['chartPanel']}>
+                                <Box sx={{ width: '88%', border:"1px solid #242525", borderRadius:10, margin:'auto', padding:'3rem'}}>
+                                  <div className={styles['chart-body']}>
+                                    <div className={styles['chart-title']}>
+                                      <h2> Exercise your Option</h2>
+                                    </div>
+                                
+                                    <div style={{marginBottom:'3rem', fontSize:'1.4rem'}}>
+                                      Exercising your options refers to puchasing a number of shares Guestbook Rewards, Inc. is offering you at a specific price during a set period of time.
+                                    </div>
+                                    <div style={{minHeight:'4rem', display:'flex', alignItems:'flex-end', justifyContent:'end'}}>
+                                      <Button 
+                                        variant = "contained"
+                                        onClick={(e)=> handleGoBack(e, 'clicked')}
+                                        className={styles['bttn']}
+                                      >
+                                        Exercise
+                                      </Button>
+                                    </div>
+                                  </div>
+                                </Box>
+                              </div>
+                            </div>
+                          <div className={styles['tablePanel']}>
+                            <TablePanel
+                              project = {projectOption[projectKey]?.project}
+                              optionAccounts={projectOption[projectKey].options}
+                              mintInfos = {mintInfo}
+                              projectKey={projectKey}
+                            />
+                          </div>
+                          <div style={{marginTop:45, marginBottom:7}}>
+                            <h2>Convertibles</h2>
+                          </div>
+                          <div className={styles['tablePanel']} style={{marginTop:2}}>
+                            <ConvertibleTable
+                              project = {projectOption[projectKey]?.project}
+                              optionAccounts={projectOption[projectKey].options}
+                              mintInfos = {mintInfo}
+                              projectKey={projectKey}
+                            />
+                          </div>
+                        </Typography>
+        }
+        {value === 2 && <TabContainer id={3}>
+                          Exercise Simulation page (comming soon)
+                        </TabContainer>
+        }
     </div>
   
   );

@@ -1,4 +1,6 @@
 import React, { memo, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { TStore } from '../store';
 import {
   Avatar,
   Box,
@@ -21,7 +23,7 @@ import { useOptionIsCall } from '../hooks/useOptionIsCall';
 import { useNormalizedStrikePriceFromOption } from '../hooks/useNormalizedStrikePriceFromOption';
 import { useTokenByMint } from '../hooks/useNetworkTokens';
 import { useNormalizeAmountOfMintBN } from '../hooks/useNormalizeAmountOfMintBN';
-import { Project, MintInfoWithKey, CallOrPut } from '../types';
+import { Project, MintInfoWithKey, CallOrPut, TotalItems } from '../types';
 import { OptionMarketWithKey } from '@mithraic-labs/psy-american';
 import { Tokens } from "@mithraic-labs/psy-token-registry";
 import { useSerumPriceByAssets } from '../hooks/useSerumPriceByAssets';
@@ -33,6 +35,7 @@ import {
 } from '../recoil';
 
 
+
 const TableBodyRow: React.VFC<{
   project : Project;
   optionAccount: OptionMarketWithKey;
@@ -40,9 +43,11 @@ const TableBodyRow: React.VFC<{
   mintInfos: Record<string, MintInfoWithKey>;
   index:number;
   serumAddress : PublicKey;
-}> = ({ project, optionAccount, optionKey, mintInfos,index, serumAddress }) => {
+  totalitems : TotalItems;
+}> = ({ project, optionAccount, optionKey, mintInfos,index, serumAddress, totalitems }) => {
   // const option = useRecoilValue(optionsMap(optionKey.toString()));
-
+  const { grantNumber } = useSelector((state: TStore) => state.projectReducer)
+  
   const row_option = optionAccount;
   const writtenOptions = useWrittenOptions();
   const writerTokenAccounts = writtenOptions[optionKey.toString()] ?? [];
@@ -54,7 +59,6 @@ const TableBodyRow: React.VFC<{
   const normalizeOptionQuote = useNormalizeAmountOfMintBN(
     mintInfos[row_option.underlyingAssetMint.toString()]?? null,
   );
-
 
   const expired = useMemo(() => {
     const nowInSeconds = Date.now() / 1000;
@@ -80,10 +84,6 @@ const TableBodyRow: React.VFC<{
     isCall,
   );
  
-  // const optionUnderlyingAssetSymbol =
-  //   optionUnderlyingAsset?.symbol ??
-  //   row_option?.underlyingAssetMint.toString() ??
-  //   '';
   const optionUnderlyingAssetSymbol =
     optionUnderlyingAsset?.symbol.toUpperCase() ??
     project?.symbol ??
@@ -128,27 +128,23 @@ const TableBodyRow: React.VFC<{
     const current_PnL = (mark_open_Price.price - mark_open_Price.openPrice )*parseInt(normalizedUnderlyingAmount.toString())
     
   let ActionFragment: React.ReactNode = null;
-  
 
   return (
         <tr > 
-              <td data-label="ID" scope="row">{index + 1}</td>
-              <td data-label="ExpDate">{ formatExpirationTimestamp(
-                  row_option?.expirationUnixTimestamp.toNumber() ?? 0,
-                ) }</td>
-              <td data-label="OptionType">{isCall ? 'Call' : 'Put'}</td>
-              <td data-label="UnderSymbol">{underlyingAssetSymbol}&nbsp;&nbsp;&nbsp;<img src={underlyingAssetLogo} style={{width:'20px', height:"20px"}}/></td>
-              <td data-label="UnderAmount">{normalizedUnderlyingAmount.toString()}</td>
-              {/* <td data-label="QuoteAmount"></td> */}
-              <td data-label="QuoteSymbol">{quoteAssetSymbol}&nbsp;&nbsp;&nbsp;<img src={optionQuoteAsset.logoURI} style={{width:'20px', height:"20px"}}/></td>
-              <td data-label="StrikePrice">$ {strike.toString()}</td>
-              <td data-label="MarkPrice">$ {mark_open_Price.price}</td>
-              <td data-label="OpenPrice">$ {mark_open_Price.openPrice}</td>
-              <td data-label="CurrentPnL">$ {current_PnL}</td>
-              <td data-label="LockedAsset"><div>{lockedAmountDisplay} {optionUnderlyingAssetSymbol}</div></td>
-              <td data-label="Action"><div>{ActionFragment}</div></td>
+          <td data-label="ID" scope="row">{index + 1}</td>
+          <td data-label="option" scope="row">
+            {underlyingAssetSymbol}-{quoteAssetSymbol}
+          </td>
+          <td data-label="ExpDate">{ formatExpirationTimestamp(
+              row_option?.expirationUnixTimestamp.toNumber() ?? 0,
+            ) }</td>
+          <td data-label="OptionType">{isCall ? 'Call' : 'Put'}</td>
+          <td data-label="originGrant"> {totalitems.granted}</td>
+          <td data-label="vestedOption"> {totalitems.vested}</td>
+          <td data-label="exercisedOtion"> {totalitems.exercised}</td>
+          <td data-label="exerciseableOption"> {totalitems.exerciseable}</td>
+          <td data-label="StrikePrice">$ {strike.toString()}</td>
         </tr>
-    
   );
 };
 

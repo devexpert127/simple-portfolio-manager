@@ -12,13 +12,11 @@ export const useDeriveMultipleSerumMarketAddresses = (
   const network = useRecoilValue(activeNetwork);
   const [serumMarketKeys, setSerumMarketKeys] = useState<PublicKey[]>([]);
   const program = useAmericanPsyOptionsProgram();
-  const _quoteMint = useRecoilValue(quoteMint);
 
   useEffect(() => {
-    if (!program || !_quoteMint) {
-      return;
-    }
+   
     const marketMetaOptions = getSupportedMarketsByNetwork(network.name);
+    console.log('Marekt Meta Options are ', marketMetaOptions);
     (async () => {
       const deriveSerumAddressesPromises = options.map(async (option) => {
         // Check if the option exists in the market meta package first. This is for backwards
@@ -31,6 +29,7 @@ export const useDeriveMultipleSerumMarketAddresses = (
         if (serumMarketAddress) {
           return new PublicKey(serumMarketAddress);
         }
+        // @ts-ignore
         const [address] = await serumUtils.deriveSerumMarketAddress(program, option.key, );
         return address;
       });
@@ -40,7 +39,7 @@ export const useDeriveMultipleSerumMarketAddresses = (
       setSerumMarketKeys(derivedAddresses);
     })();
   
-  }, [_quoteMint, network]);
+  }, [ network]);
 
   return serumMarketKeys;
 };

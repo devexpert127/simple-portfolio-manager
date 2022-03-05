@@ -5,7 +5,7 @@ import { OptionMarket } from "@mithraic-labs/psy-american";
 import { Tokens } from "@mithraic-labs/psy-token-registry";
 import { bnToFloat, formatStrike } from "../lib/utils";
 
-import { MintInfoWithKey, OptionAccounts, Project, TableData, SerumMarketAndProgramId, CallOrPut, OptionType } from "../types";
+import { MintInfoWithKey, OptionAccounts, Project, TableData, SerumMarketAndProgramId, CallOrPut, OptionType, TotalItems } from "../types";
 import OptionOverview from "./OptionOverview";
 import styles from "../styles/PortfolioOverview.module.scss";
 import { PublicKey } from '@solana/web3.js';
@@ -32,7 +32,10 @@ type ChainRow = {
   call: CallOrPut;
   put: CallOrPut;
 };
+
 let outside_serum_address : PublicKey[];
+
+
 const useGetChains = (projectKey: any): ChainRow[] => {
   const { projectOption } = useSelector((state: TStore) => state.projectReducer)
   const [acc, setAcc] = useState<ChainRow[]>([]);
@@ -40,7 +43,7 @@ const useGetChains = (projectKey: any): ChainRow[] => {
   const options_candi = projectOption[projectKey].options;
   let options: OptionMarketWithKey[] = options_candi.map((option) => option.optionMarket);
   const serumAddresses = useDeriveMultipleSerumMarketAddresses(options);
- 
+  console.log('Serum addresses are ', serumAddresses);
   outside_serum_address = serumAddresses
   const _underlyingMint = useRecoilValue(underlyingMint);
   const _quoteMint = useRecoilValue(quoteMint);
@@ -108,7 +111,7 @@ const useGetChains = (projectKey: any): ChainRow[] => {
       );
       setAcc(acc);
     }
-  }, [projectKey, _underlyingMint]);
+  }, [projectKey, _underlyingMint, _quoteMint]);
   return acc;
 }
 
@@ -123,8 +126,6 @@ const TablePanle: React.FC<{
   mintInfos,
   projectKey
 }) => {
-    const [tableData, setTableData] = useState<TableData[]>([]);
-    let tableData_bump: TableData[] = [];
     const [round, setRound] = useState(true);
     const { serumMarkets, fetchMultipleSerumMarkets } = useSerum();
     const writtenOptions = useWrittenOptions();
@@ -132,14 +133,41 @@ const TablePanle: React.FC<{
       () => Object.keys(writtenOptions).map((key) => new PublicKey(key)),
       [writtenOptions],
     );
+
     let i = 0
     const chains = useGetChains(projectKey);
-    console.log('here is Okay', i++)
     let precision = 0;
         if (round && chains[0]?.strike) {
           precision = calculateStrikePrecision(chains[0].strike);
         }
-
+    const { grantNumber } = useSelector((state: TStore) => state.projectReducer)
+    let sumGrant = 0;
+    let sumVested = 0;
+    let sumExercised =0;
+    let sumExerciseable = 0;
+    const calculateItem = (idx : number) : TotalItems => {
+      const deviationArr =  [0.24, 0.28, 0.46, 0.18];
+      const vestMulNumber = [0.75, 0.8, 0.9, 1];
+      const exeMulNumber = [0.64, 0.56, 0.48, 0.84];
+      const averageValue = Math.round(grantNumber/optionAccounts.length);
+      const mulNumber = (idx+1)%2==1?1:(-1);
+      const arrIndex = Math.floor((idx%8)/2);
+      const originGrant = Math.round(averageValue* (1 + mulNumber*deviationArr[arrIndex]));
+      sumGrant = sumGrant + originGrant
+      const vestedOption = Math.round(originGrant * vestMulNumber[(idx%4)]);
+      sumVested = sumVested + vestedOption
+      const excercisedOption = Math.round(vestedOption * exeMulNumber[idx%4]);
+      sumExercised = sumExercised + excercisedOption
+      const exerciseableOption = vestedOption - excercisedOption;
+      sumExerciseable = sumExerciseable + exerciseableOption;
+      const total : TotalItems={
+        granted : originGrant,
+        vested : vestedOption,
+        exercised : excercisedOption,
+        exerciseable : exerciseableOption
+      }
+      return total
+    }
     useEffect(() => {
     
       const serumKeys: SerumMarketAndProgramId[] = [];
@@ -165,55 +193,6 @@ const TablePanle: React.FC<{
       }
     }, [chains, fetchMultipleSerumMarkets, serumMarkets]);
 
-    // useEffect(() => {
-    //   optionAccounts.map((x, index) => {
-
-    //     let expirationTime = new Date(x.optionMarket.expirationUnixTimestamp.toNumber() * 1000);
-    //     let year = expirationTime.getFullYear();
-    //     let candiMonth = expirationTime.getMonth() + 1;
-    //     let month = candiMonth < 10 ? '0' + candiMonth : candiMonth;
-    //     let candiDate = expirationTime.getDate()
-    //     let dates = candiDate < 10 ? '0' + candiDate : candiDate;
-    //     let dateTime = year + '-' + month + '-' + dates
-
-    //     let quoteMint = mintInfos[x.optionMarket.quoteAssetMint.toString()];
-    //     let underlyingMint = mintInfos[x.optionMarket.underlyingAssetMint.toString()];
-    //     let optionMarket = x.optionMarket;
-
-    //     const quoteToken = Tokens.devnet[quoteMint.pubkey.toString()];
-    //     const underlyingToken = Tokens.devnet[underlyingMint.pubkey.toString()];
-    //     const underTokenMainNet = Tokens.mainnet[underlyingMint.pubkey.toString()];
-
-    //     let underlyingAmount = bnToFloat(
-    //       x.optionMarket.underlyingAmountPerContract,
-    //       underlyingToken.decimals,
-    //       2
-    //     );
-    //     let strikeDisplay = formatStrike(
-    //       optionMarket.underlyingAmountPerContract,
-    //       optionMarket.quoteAmountPerContract,
-    //       quoteToken.decimals,
-    //       underlyingToken.decimals
-    //     );
-    //     let mintFeeAccount = x.optionMarket.mintFeeAccount.toString();
-    //     let exerciseFeeAccount = x.optionMarket.exerciseFeeAccount.toString();
-    //     const rowData = {
-    //       expDate: dateTime,
-    //       underAmount: underlyingAmount,
-    //       unerSymbol: project.symbol,
-    //       underLogo: project.logo,
-    //       quoteAmount: strikeDisplay,
-    //       quoteSymbol: quoteToken.symbol.toUpperCase(),
-    //       quoteLogo: quoteToken.logoURI,
-    //       mintFeeAcc: mintFeeAccount,
-    //       exerciseFeeAcc: exerciseFeeAccount
-    //     }
-    //     tableData_bump.push(rowData);
-    //   })
-    //   setTableData(tableData_bump);
-    // }, [])
-
-
     return (
       <div className={styles['tableDiv']}>
         <table>
@@ -221,36 +200,44 @@ const TablePanle: React.FC<{
           <thead>
             <tr>
               <th scope="col">No</th>
+              <th scope="col">Option</th>
               <th scope="col">Expiration</th>
               <th scope="col">Option Type</th>
-              <th scope="col">Underlying Asset</th>
-              <th scope="col">Contract Size</th>
-              <th scope="col">Quote Asset</th>
+              <th scope="col">Origin Grant</th>
+              <th scope="col">Vested</th>
+              <th scope="col">Exercised</th>
+              <th scope="col">Exerciseable</th>
               <th scope="col">Strike Price</th>
-              <th scope="col">Mark Price</th>
-              <th scope="col">Open Price</th>
-              <th scope="col">Current PnL</th>
-              <th scope="col">Locked Asset</th>
-              <th scope="col">Action</th>
             </tr>
           </thead>
 
           <tbody>
 
             {optionAccounts.map((option, index) => (
-              <TableBodyRow
-                key={option.optionMarket.key.toString()}
-                project={project}
-                optionAccount={option.optionMarket}
-                optionKey={option.optionMarket.key}
-                mintInfos={mintInfos}
-                index={index}
-                serumAddress={outside_serum_address[index]}
-              />
+              <>
+                <TableBodyRow
+                  key={option.optionMarket.key.toString()}
+                  project={project}
+                  optionAccount={option.optionMarket}
+                  optionKey={option.optionMarket.key}
+                  mintInfos={mintInfos}
+                  index={index}
+                  serumAddress={outside_serum_address[index]}
+                  totalitems = {calculateItem(index)}
+                />
+              </>
             ))}
-
-          </tbody>
-
+            </tbody>
+            <tfoot>
+              <tr style={{fontSize:'0.85em'}}>
+                <td colSpan={4}> Total </td>
+                <td data-label="originGrant"> {sumGrant}</td>
+                <td data-label="vestedOption"> {sumVested}</td>
+                <td data-label="exercisedOtion"> {sumExercised}</td>
+                <td data-label="exerciseableOption"> {sumExerciseable}</td>
+                <td data-label="StrikePrice">&nbsp;</td>
+              </tr>
+            </tfoot>
         </table>
       </div>
     );
