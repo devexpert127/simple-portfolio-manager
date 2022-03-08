@@ -12,6 +12,7 @@ const TVChartContainer : React.FC<{
 }) => {
   const ref = useRef<null | HTMLDivElement>(null);
   const [dataCandle, setCandleData] = useState<CandleChartData[]>([]);
+  const [dataFlag, setDataFlg] = useState(false);
   // const [dataLine, setLineData] = useState([])
   
   let arr : CandleChartData[]=[];
@@ -38,6 +39,7 @@ const TVChartContainer : React.FC<{
           });
         })
         setCandleData(arr);
+        setDataFlg(true)
       })
       .catch((err) => console.info(err));
     if (dataCandle && dataCandle.length > 0 && ref.current) {
@@ -89,7 +91,7 @@ const TVChartContainer : React.FC<{
     } else {
       console.log('this eerror', ref.current);
     }
-  }, [dataCandle]);
+  }, [dataFlag]);
 
   return <div ref={ref} className="TVChartContainer"/>;
 }
