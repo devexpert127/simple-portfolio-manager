@@ -82,7 +82,7 @@ const PortfolioOverview = () => {
     <div className={styles["portfolio-container"]}>
       <div className={styles["portfolio-header"]}>
           <h2>Portfolio Overview</h2>
-          <p><span>Owner Name : &nbsp;&nbsp;</span> {account.accountName} </p>
+          {/* <p><span>Owner Name : &nbsp;&nbsp;</span> {account.accountName} </p> */}
           <br/>
           <p><span>Owner Address : &nbsp;&nbsp;</span> {account.pubKey} </p>
       </div>
