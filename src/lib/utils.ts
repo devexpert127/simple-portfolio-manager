@@ -53,9 +53,9 @@ export const getAllWalletOptions = async (
   });
   
   const matches: Record<string, ProjectOptions> = {};
-
+  
   // NOTE: This only gets Long Calls
-  optionMarkets.forEach((optionMarket) => {
+  optionMarkets.forEach((optionMarket,idx) => {
     // Check if the underlyingMint is apart of a known project
     const project = projects.find(
       (project) =>
@@ -63,15 +63,15 @@ export const getAllWalletOptions = async (
     );
     if (!project) return;
     // Check if the wallet contains the option
-    // const tokenAccount = tokenAccounts[optionMarket.optionMint.toString()];
-    const tokenAccount = tokenAccounts['2GzKsbGV5TwXrzAKTiCu8jq9d5KWkzuNFv2rpZPJHxvB'];
-    
+    const tokenAccount = tokenAccounts[optionMarket.optionMint.toString()];
+    // const tokenAccount = tokenAccounts['2GzKsbGV5TwXrzAKTiCu8jq9d5KWkzuNFv2rpZPJHxvB'];
     if (!tokenAccount) return;
       
     const match = {
       optionMarket,
       tokenAccount,
     };
+    console.log("Match is ", match)
     if (matches[project.key] && Array.isArray(matches[project.key].options)) {
       matches[project.key].options.push(match);
     } else {

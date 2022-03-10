@@ -28,9 +28,10 @@ const PortfolioOverview = () => {
     
     if (wallet && wallet.connected) {
       // TODO put the Program into a higher order component
+      console.log("wallet info is ", wallet)
       if(Object.keys(projectOption).length <= 0){
         setLoadingProjects(true);
-        const accountName = "Lyappunov"
+        const accountName = "Option Owner"
         dispatch(updatedAccount({account : {pubKey:wallet.publicKey.toString(),accountName:accountName}}))
         const anchorProvider = new Provider(provider.connection, wallet, {});
         const program = new Program(
@@ -38,16 +39,12 @@ const PortfolioOverview = () => {
           new PublicKey("R2y9ip6mxmWUj4pt54jP2hz2dgvMozy9VTSwMWE7evs"),
           anchorProvider
         );
-
-        console.log('Local program is ', program);
         // dispatch(updatedProgram({programRe : program}));
         (async () => {
           // on wallet connect get all the options the user holds https://github.com/mithraiclabs/psyoptions-management/issues/3
           const accountInfo = await program.provider.connection.getAccountInfo(
             new PublicKey('FsEBBfyVUgC92K3hB2GQywv56vsUgYjGgDARoeDLxUyn')
           );
-          // console.log('Redux program is ', programRe)
-          console.log('Account Info is ', accountInfo)
           
           const temp = await getAllWalletOptions(program, projectList);
           dispatch(updatedProjectOption({ projectOption : temp }))
